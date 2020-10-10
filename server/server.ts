@@ -5,6 +5,8 @@ import Router from "koa-router";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
 import next from "next";
+import initDB from "../utils/initDB";
+import { createMerchant } from "./createMerchant";
 
 dotenv.config();
 
@@ -16,9 +18,10 @@ const app = next({
 const handle = app.getRequestHandler();
 const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES } = process.env;
 
-app.prepare().then(() => {
+app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
+  await initDB.check();
   // Session
   server.use(session({ sameSite: "none", secure: true }, server));
   server.keys = [SHOPIFY_API_SECRET];
@@ -30,6 +33,7 @@ app.prepare().then(() => {
       scopes: [SCOPES],
 
       async afterAuth(ctx: Context) {
+        // Set up cookies
         const { shop, accessToken } = ctx.session;
         ctx.cookies.set("shopOrigin", shop, {
           httpOnly: false,
@@ -37,6 +41,8 @@ app.prepare().then(() => {
           sameSite: "none",
         });
         ctx.redirect("/");
+        // Create merchant
+        createMerchant(shop);
       },
     })
   );
@@ -48,6 +54,11 @@ app.prepare().then(() => {
   );
   // Routing
   router.get("(.*)", verifyRequest(), async (ctx: Context) => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+    ctx.res.statusCode = 200;
+  });
+  router.post("(.*)", verifyRequest(), async (ctx: Context) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;

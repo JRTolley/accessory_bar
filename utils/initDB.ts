@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { Connection, createConnection, getConnection } from "typeorm";
+import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
 
 var initDB = (function () {
@@ -19,7 +20,7 @@ var initDB = (function () {
       port: 5432,
       database: "shopify",
       synchronize: true,
-      entities: [Merchant],
+      entities: [Merchant, AccessorySet],
     });
 
     return conn;

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { withUrqlClient } from "next-urql";
 import { useQuery } from "urql";
 import gql from "graphql-tag";
+import { TitleBar } from "@shopify/app-bridge-react";
 
 const PRODUCT_QUERY = gql`
   query getProducts($ids: [ID!]!) {
@@ -34,8 +35,8 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
-const Index = () => {
-  const [result, reexecuteQuery] = useQuery({
+const Index: React.FC = () => {
+  const [result, _] = useQuery({
     query: PRODUCT_QUERY,
     variables: { ids: ["gid://shopify/Product/5444127686823"] },
   });
@@ -47,6 +48,7 @@ const Index = () => {
 
   return (
     <Page>
+      <TitleBar title="Overview"></TitleBar>
       <Heading>
         It works!
         {data.nodes.map((node) => (
