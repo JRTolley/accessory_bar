@@ -1,9 +1,9 @@
-import App, { Container } from "next/app";
+import { Provider } from "@shopify/app-bridge-react";
 import { AppProvider } from "@shopify/polaris";
 // import { Component } from "react";
 import translations from "@shopify/polaris/locales/en.json";
-import { Provider } from "@shopify/app-bridge-react";
 import Cookies from "js-cookie";
+import App from "next/app";
 
 class MyApp extends App {
   render() {
