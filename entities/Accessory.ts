@@ -1,16 +1,16 @@
 import {
-  Entity,
   BaseEntity,
-  PrimaryGeneratedColumn,
   Column,
-  OneToMany,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { AccessorySet } from "./AccessorySet";
 
 @Entity()
-export class Merchant extends BaseEntity {
+export class Accessory extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -20,9 +20,9 @@ export class Merchant extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ unique: true })
-  shopName: string;
+  @Column()
+  pid: string;
 
-  @OneToMany("AccessorySet", "merchant", { eager: true })
-  accessorySets?: AccessorySet[];
+  @ManyToOne("AccessorySet", "accessories", { onDelete: "CASCADE" })
+  set: AccessorySet;
 }

@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { Connection, createConnection, getConnection } from "typeorm";
+import { Accessory } from "../entities/Accessory";
 import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
 
@@ -20,9 +21,12 @@ var initDB = (function () {
       port: 5432,
       database: "shopify",
       synchronize: true,
-      entities: [Merchant, AccessorySet],
+      entities: [Merchant, AccessorySet, Accessory],
     });
-
+    // await Accessory.clear();
+    // console.log("Merchants: ", await Merchant.find());
+    // console.log("AccessorySet: ", await AccessorySet.find());
+    // console.log("Accessories: ", await Accessory.find());
     return conn;
   }
 

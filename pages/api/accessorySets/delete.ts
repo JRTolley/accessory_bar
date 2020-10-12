@@ -1,31 +1,22 @@
+import { Console } from "console";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Accessory } from "../../../entities/Accessory";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
 import initDB from "../../../utils/initDB";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log("> API: /api/accessorySets/create hit");
+  console.log("> API: /api/accessorySets/delete hit");
   await initDB.check();
   if (req.method === "POST" && req.body.ids) {
-    // Get Merchant
+    // Delete ets
     const merchant = await Merchant.findOne({
       shopName: req.cookies.shopOrigin,
     });
-
-    // Remove duplicates
-    req.body.ids = req.body.ids.filter(
-      (id) => !merchant.accessorySets.map((set) => set.baseProduct).includes(id)
+    // Get the right accessory sets
+    const toDelete = merchant.accessorySets.filter((set) =>
+      req.body.ids.includes(set.id)
     );
-
-    await Promise.all(
-      req.body.ids.map(async (id) => {
-        return await AccessorySet.create({
-          baseProduct: id,
-          merchant: merchant,
-        }).save();
-      })
-    );
+    await AccessorySet.remove(toDelete);
 
     const updatedMerchant = await Merchant.findOne({
       shopName: req.cookies.shopOrigin,

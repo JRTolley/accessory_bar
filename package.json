@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development ts-node ./server/server.ts",
-    "generate": "graphql-codegen --config codegen.yml"
+    "build": "next build",
+    "start": "NODE_ENV=production ts-node ./server/server.ts"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",

@@ -13,8 +13,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
     const results = await AccessorySet.find({ where: { merchant: merchant } });
     res.status(200).json(results);
+  } else if (req.method === "POST" && req.body.id) {
+    const merchant = await Merchant.findOne({
+      shopName: req.cookies.shopOrigin,
+    });
+    const result = await AccessorySet.find({
+      where: {
+        merchant: merchant,
+        id: req.body.id,
+      },
+    });
+    if (!result) {
+      res.status(400).end();
+      return;
+    }
+    res.status(200).json(result);
   } else {
-    res.status(400).json("Method not supported");
+    res.status(400).end();
   }
 }
 
