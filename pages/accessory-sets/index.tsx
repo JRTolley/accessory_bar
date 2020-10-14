@@ -1,10 +1,8 @@
 import { ResourcePicker, TitleBar } from "@shopify/app-bridge-react";
-import { Card, EmptyState, Layout, Page } from "@shopify/polaris";
+import { EmptyState, Layout, Page, Loading, Frame } from "@shopify/polaris";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "urql";
 import ResourceListForSets from "../../components/ResourceListForSets";
-import { getProductsById } from "../../graphql/queries/getProductsById";
 
 const AccessorySets: React.FC = () => {
   const img =
@@ -13,12 +11,14 @@ const AccessorySets: React.FC = () => {
   // State
   const [sets, setSets] = useState([]);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Load initial data from server
   useEffect(() => {
     axios.get(`api/accessorySets/get`).then((res) => {
       setSets(res.data);
       console.log(res);
+      setLoading(false);
     });
   }, []);
 
@@ -34,6 +34,15 @@ const AccessorySets: React.FC = () => {
       <p> Help your customers buy what they need</p>
     </EmptyState>
   );
+
+  if (loading)
+    return (
+      <Page>
+        <Frame>
+          <Loading />
+        </Frame>
+      </Page>
+    );
 
   return (
     <Page>

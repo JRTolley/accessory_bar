@@ -1,5 +1,5 @@
 import { ResourcePicker, TitleBar } from "@shopify/app-bridge-react";
-import { EmptyState, Layout, Page } from "@shopify/polaris";
+import { EmptyState, Frame, Layout, Loading, Page } from "@shopify/polaris";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ const AccessorySetPage: React.FC = () => {
   // State
   const [set, setSet] = useState(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
@@ -23,9 +24,19 @@ const AccessorySetPage: React.FC = () => {
       axios.post(`/api/accessorySets/get`, { id: id }).then((res) => {
         setSet(res.data[0]);
         console.log("Post get: ", res);
+        setLoading(false);
       });
     }
   }, [id]);
+
+  if (loading)
+    return (
+      <Page>
+        <Frame>
+          <Loading />
+        </Frame>
+      </Page>
+    );
 
   const emptyState = (
     <EmptyState
