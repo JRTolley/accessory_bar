@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import Koa, { Context } from "koa";
 import session from "koa-session";
 import Router from "koa-router";
+import staticServe from "koa-static";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
 import next from "next";
@@ -22,6 +23,8 @@ app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   await initDB.check();
+  // Serve the static script for the storefront
+  server.use(staticServe("./public"));
   // Session
   server.use(session({ sameSite: "none", secure: true }, server));
   server.keys = [SHOPIFY_API_SECRET];
@@ -52,6 +55,7 @@ app.prepare().then(async () => {
       version: ApiVersion.April20,
     })
   );
+
   // Routing
   router.get("(.*)", verifyRequest(), async (ctx: Context) => {
     await handle(ctx.req, ctx.res);
