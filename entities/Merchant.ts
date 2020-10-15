@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { AccessorySet } from "./AccessorySet";
+import { Product } from "./Product";
 
 @Entity()
 export class Merchant extends BaseEntity {
@@ -25,4 +26,11 @@ export class Merchant extends BaseEntity {
 
   @OneToMany("AccessorySet", "merchant", { eager: true })
   accessorySets?: AccessorySet[];
+
+  @OneToMany("Product", "merchant", {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    eager: true,
+  })
+  products?: Product[];
 }

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
+import { Product } from "../../../entities/Product";
 import initDB from "../../../utils/initDB";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -20,11 +21,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const realPid = `gid://shopify/Product/${req.body.product_id}`;
     const accessorySet = await AccessorySet.findOne({
       merchant,
-      baseProduct: realPid,
+      baseProduct: await Product.findOne({ pid: realPid }),
     });
-    console.log("AccessorySet: ", accessorySet);
-
-    res.status(200).json({ good: "job" });
+    if (!accessorySet) {
+      console.log("No accessory set found");
+      res.status(204).end();
+    } else {
+      // Success
+      res.status(200).json(accessorySet.accessories);
+    }
   } else {
     res.status(400).end();
   }

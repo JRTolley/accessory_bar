@@ -7,9 +7,7 @@ import {
 } from "@shopify/polaris";
 import Axios from "axios";
 import React, { useState } from "react";
-import { useQuery } from "urql";
 import { AccessorySet } from "../entities/AccessorySet";
-import { getProductsById } from "../graphql/queries/getProductsById";
 
 interface Props {
   set: AccessorySet;
@@ -26,35 +24,35 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
     },
   ];
 
-  const [result, _] = useQuery({
-    query: getProductsById,
-    variables: { ids: set.accessories.map((acc) => acc.pid) },
-  });
+  // const [result, _] = useQuery({
+  //   query: getProductsById,
+  //   variables: { ids: set.accessories.map((acc) => acc.pid) },
+  // });
 
-  const { data, fetching, error } = result;
+  // const { data, fetching, error } = result;
 
-  if (fetching) return <Card>Loading...</Card>;
-  if (error) return <Card>Error: {error.message}</Card>;
+  // if (fetching) return <Card>Loading...</Card>;
+  // if (error) return <Card>Error: {error.message}</Card>;
 
   // Build the objects we need
-  const fullSets = data.nodes
-    .map((res) => {
-      const accessory = set.accessories.filter((a) => a.pid === res.id)[0];
-      if (!accessory) return {};
-      return {
-        ...accessory,
-        title: res.title,
-        img: res.images.edges[0].node.originalSrc,
-        alt: res.images.edges[0].node.altText,
-      };
-    })
-    .filter((acc) => acc.id); // Removes delete accessories
+  // const fullSets = data.nodes
+  //   .map((res) => {
+  //     const accessory = set.accessories.filter((a) => a.pid === res.id)[0];
+  //     if (!accessory) return {};
+  //     return {
+  //       ...accessory,
+  //       title: res.title,
+  //       //img: res.images.edges[0].node.originalSrc,
+  //       alt: res.images.edges[0].node.altText,
+  //     };
+  //   })
+  //   .filter((acc) => acc.id); // Removes delete accessories
 
   return (
     <Card>
       <ResourceList
         resourceName={{ singular: "Accessory", plural: "Accessories" }}
-        items={fullSets}
+        items={set.accessories}
         renderItem={renderItem}
         selectedItems={selectedItems}
         onSelectionChange={setSelectedItems as any} // Works but throwing type error?
@@ -65,8 +63,8 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
   );
 
   function renderItem(item) {
-    const { id, pid, title, img, alt } = item;
-    const media = <Thumbnail source={img} alt={alt} />;
+    const { id, pid, title, img } = item;
+    const media = <Thumbnail source={img} alt={"not-set"} />;
     return (
       <ResourceItem id={id} onClick={null} media={media}>
         <TextStyle variation="strong">{title}</TextStyle>
@@ -80,8 +78,9 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
     );
     await Axios.post(`/api/accessorySets/update`, {
       id: set.id,
-      accessories: remaining.map((acc) => acc.pid),
+      accessories: remaining,
     }).then((res) => {
+      console.log("Delete Accessories Response: ", res.data);
       setSet(res.data);
     });
     setSelectedItems([]);

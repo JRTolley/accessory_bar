@@ -1,19 +1,19 @@
-function uiCreateProduct(): HTMLDivElement {
-  const element = document.createElement("div");
+function uiCreateProduct(item_json): HTMLLIElement {
+  const element = document.createElement("li");
   element.style.display = "flex";
+  element.style.flex = "1 1 0px";
   element.style.flexDirection = "column";
 
   // Picture
   const picture = document.createElement("img");
-  picture.src =
-    "https://cdn.shopify.com/s/files/1/0425/8273/7063/products/young-man-in-bright-fashion_925x_f7029e2b-80f0-4a40-a87b-834b9a283c39_240x240.jpg?v=1594222380";
+  picture.src = item_json.img;
   // Link Text
   const link = document.createElement("a");
-  link.href = "www.google.com";
-  link.appendChild(document.createTextNode("www.google.com"));
+  link.href = item_json.handle;
+  link.appendChild(document.createTextNode(item_json.title));
   // Price
   const price = document.createElement("p");
-  price.appendChild(document.createTextNode("$19.99"));
+  price.appendChild(document.createTextNode(item_json.price));
 
   element.appendChild(picture);
   element.appendChild(link);
@@ -23,8 +23,8 @@ function uiCreateProduct(): HTMLDivElement {
   return element;
 }
 
-function uiCreateProductFlex(): HTMLDivElement {
-  const element = document.createElement("div");
+function uiCreateProductFlex(): HTMLUListElement {
+  const element = document.createElement("ul");
   element.style.display = "flex";
   element.style.flexDirection = "row";
   element.style.justifyContent = "space-around";
@@ -36,7 +36,7 @@ function uiCreateDivider(): HTMLDivElement {
   element.style.height = "1px";
   element.style.margin = "5px 0px 5px 0px";
   element.style.width = "100%";
-  element.style.backgroundColor = "#666666";
+  element.style.backgroundColor = "#AAAAAA";
 
   return element;
 }
@@ -48,7 +48,7 @@ function uiMasterFlex(): HTMLDivElement {
   return main;
 }
 
-function uiMain(): HTMLDivElement {
+function uiMain(product_json): HTMLDivElement {
   console.log("UI Main init");
 
   // Create master flexbox
@@ -63,9 +63,9 @@ function uiMain(): HTMLDivElement {
 
   // Products
   const productFlex = uiCreateProductFlex();
-  Array.from(Array(7).keys()).forEach(() => {
-    let product = uiCreateProduct();
-    productFlex.appendChild(product);
+  product_json.forEach((element) => {
+    let productDisplay = uiCreateProduct(element);
+    productFlex.appendChild(productDisplay);
   });
 
   masterFlex.appendChild(productFlex);

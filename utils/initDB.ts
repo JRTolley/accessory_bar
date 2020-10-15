@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { Connection, createConnection, getConnection } from "typeorm";
-import { Accessory } from "../entities/Accessory";
 import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
+import { Product } from "../entities/Product";
 
 var initDB = (function () {
   let instance: Connection | null;
@@ -21,9 +21,10 @@ var initDB = (function () {
       port: 5432,
       database: "shopify",
       synchronize: true,
-      entities: [Merchant, AccessorySet, Accessory],
+      entities: [Merchant, AccessorySet, Product],
     });
-    // await Accessory.clear();
+    // const sets = await AccessorySet.find();
+    // await Promise.all(sets.map(async (set) => await set.remove()));
     // console.log("Merchants: ", await Merchant.find());
     // console.log("AccessorySet: ", await AccessorySet.find());
     // console.log("Accessories: ", await Accessory.find());

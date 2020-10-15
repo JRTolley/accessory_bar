@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ResourceListForAccessories from "../../components/ResourceListForAccessories";
+import accessoriesFromResources from "../../utils/frontend/accessoriesFromResources";
 
 const AccessorySetPage: React.FC = () => {
   const img =
@@ -80,11 +81,11 @@ const AccessorySetPage: React.FC = () => {
   );
 
   async function addAccessories(resources) {
-    const newIds = resources.selection.map((sel) => sel.id);
-    const existingIds = set.accessories.map((acc) => acc.pid);
+    const newAccessories = accessoriesFromResources(resources);
+    const existingAccessories = set.accessories;
     const res = await axios.post(`/api/accessorySets/update`, {
       id: set.id,
-      accessories: newIds.concat(existingIds),
+      accessories: newAccessories.concat(existingAccessories),
     });
     console.log("Res: ", res);
     setSet(res.data);

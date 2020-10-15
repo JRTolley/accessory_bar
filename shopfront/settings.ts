@@ -13,9 +13,11 @@ async function getSettings() {
     body: JSON.stringify(body),
   });
 
+  if (res.status === 204) {
+    // Not a product set
+    return null;
+  }
   const res_json = await res.json();
-
-  console.log("Response Json: ", res_json);
-
+  console.log("Settings Json: ", res_json);
   return res_json;
 }

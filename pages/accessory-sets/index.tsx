@@ -3,6 +3,7 @@ import { EmptyState, Layout, Page, Loading, Frame } from "@shopify/polaris";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ResourceListForSets from "../../components/ResourceListForSets";
+import accessoriesFromResources from "../../utils/frontend/accessoriesFromResources";
 
 const AccessorySets: React.FC = () => {
   const img =
@@ -74,9 +75,9 @@ const AccessorySets: React.FC = () => {
 
   async function createSet(resources) {
     console.log("createSet: ", resources);
-    const ids = resources.selection.map((r) => r.id);
+    const accessories = accessoriesFromResources(resources);
     const returned_sets = await axios.post(`api/accessorySets/create`, {
-      ids: ids,
+      accessories,
     });
     setSets(returned_sets.data);
     setPickerOpen(false);

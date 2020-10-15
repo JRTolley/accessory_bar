@@ -3,13 +3,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Accessory } from "./Accessory";
 import { Merchant } from "./Merchant";
+import { Product } from "./Product";
 
 @Entity()
 export class AccessorySet extends BaseEntity {
@@ -22,8 +24,9 @@ export class AccessorySet extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ unique: true })
-  baseProduct!: string;
+  @OneToOne(() => Product, { nullable: false, eager: true })
+  @JoinColumn()
+  baseProduct!: Product;
 
   @Column()
   merchantId!: number;
@@ -33,10 +36,10 @@ export class AccessorySet extends BaseEntity {
   })
   merchant!: Merchant;
 
-  @OneToMany("Accessory", "set", {
+  @ManyToMany(() => Product, (product) => product.sets, {
     eager: true,
     cascade: true,
     onDelete: "CASCADE",
   })
-  accessories?: Accessory[];
+  accessories?: Product[];
 }
