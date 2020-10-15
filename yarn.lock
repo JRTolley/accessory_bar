@@ -1058,6 +1058,13 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.0.tgz#6c9eafc78c1529248f8f4d92b0799a712b6052c6"
   integrity sha512-i9YbZPN3QgfighY/1X1Pu118VUz2Fmmhd6b2n0/O8YVgGGfw0FbUYoA97k7FkpGJ+pLCFEDLUmAPPV4D1kpeFw==
 
+"@koa/cors@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@koa/cors/-/cors-3.1.0.tgz#618bb073438cfdbd3ebd0e648a76e33b84f3a3b2"
+  integrity sha512-7ulRC1da/rBa6kj6P4g2aJfnET3z8Uf3SWu60cjbtxTA5g8lxRdX/Bd2P92EagGwwAhANeNw8T8if99rJliR6Q==
+  dependencies:
+    vary "^1.1.2"
+
 "@next/env@9.5.5":
   version "9.5.5"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-9.5.5.tgz#db993649ec6e619e34a36de90dc2baa52fc5280f"
@@ -5950,6 +5957,11 @@ system@>=0.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/system/-/system-2.0.1.tgz#d26a85135ee7f36e054e7f0eec4467f3b1dd9742"
   integrity sha512-BwSUSa8LMHZouGadZ34ck3TsrH5s3oMmTKPK+xHdbBnTCZOZMJ38fHGKLAHkBl0PXru1Z4BsymQU4qqvTxWzdQ==
+
+systemjs@^6.7.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-6.7.1.tgz#3db5036f450180a0701e078fbb5b434a690026f0"
+  integrity sha512-Q78H/SYy9ErC8PH8r9vA/FcQ3X+Hf33dOpx2JKP/Ma6f2gHuSScPFuCKZH+6CIj7EsIJlzODxSG4mMIpjOh5oA==
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

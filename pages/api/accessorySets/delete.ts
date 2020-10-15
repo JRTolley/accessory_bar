@@ -1,4 +1,3 @@
-import { Console } from "console";
 import { NextApiRequest, NextApiResponse } from "next";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";

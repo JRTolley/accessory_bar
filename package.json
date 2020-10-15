@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "NODE_ENV=development ts-node ./server/server.ts",
     "generate": "rm ./public/index.min.js || true && tsc --p tsconfig.minify.json ./shopfront/*.ts && mv ./shopfront/*.js ./public/ && uglifyjs --compress --mangle --output ./public/index.min.js -- ./public/*.js",
-    "gen": "tsc --p tsconfig.minify.json",
+    "gen": "tsc --p tsconfig.minify.json && uglifyjs --compress --mangle --output ./public/index.min.js -- ./shopfront/*.js && rm ./shopfront/*.js",
     "build": "next build",
     "start": "NODE_ENV=production ts-node ./server/server.ts"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@koa/cors": "^3.1.0",
     "@shopify/app-bridge-react": "^1.27.2",
     "@shopify/koa-shopify-auth": "^3.1.70",
     "@shopify/koa-shopify-graphql-proxy": "^4.0.2",
@@ -36,6 +37,7 @@
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "reflect-metadata": "^0.1.13",
+    "systemjs": "^6.7.1",
     "ts-node": "^9.0.0",
     "typeorm": "^0.2.28",
     "uglify-js": "^3.11.2",

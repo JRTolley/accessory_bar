@@ -3,11 +3,13 @@ import Koa, { Context } from "koa";
 import session from "koa-session";
 import Router from "koa-router";
 import staticServe from "koa-static";
+import cors from "@koa/cors";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
 import next from "next";
 import initDB from "../utils/initDB";
 import { createMerchant } from "./createMerchant";
+import { installShopfront } from "./installShopfront";
 
 dotenv.config();
 
@@ -17,13 +19,18 @@ const app = next({
   dev,
 });
 const handle = app.getRequestHandler();
-const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES } = process.env;
+const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES, HOST } = process.env;
 
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   await initDB.check();
   // Serve the static script for the storefront
+  server.use(
+    cors({
+      credentials: true,
+    })
+  );
   server.use(staticServe("./public"));
   // Session
   server.use(session({ sameSite: "none", secure: true }, server));
@@ -43,6 +50,7 @@ app.prepare().then(async () => {
           secure: true,
           sameSite: "none",
         });
+        await installShopfront(accessToken, shop, HOST);
         ctx.redirect("/");
         // Create merchant
         createMerchant(shop);

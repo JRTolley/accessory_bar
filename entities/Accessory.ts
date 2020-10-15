@@ -23,6 +23,11 @@ export class Accessory extends BaseEntity {
   @Column()
   pid: string;
 
-  @ManyToOne("AccessorySet", "accessories", { onDelete: "CASCADE" })
+  @Column()
+  setId: number;
+
+  @ManyToOne("AccessorySet", "accessories", {
+    onDelete: "CASCADE",
+  })
   set: AccessorySet;
 }
