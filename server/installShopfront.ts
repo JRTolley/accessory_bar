@@ -21,5 +21,9 @@ export async function installShopfront(accessToken, shop, host) {
     })
     .toPromise();
 
-  console.log("Res: ", res);
+  if (!res.error) {
+    console.log(`> ${shop} - Script tag successfully installed`);
+  } else {
+    console.error(`! ${shop} - Script tag installation failure`);
+  }
 }

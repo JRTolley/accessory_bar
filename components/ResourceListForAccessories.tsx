@@ -24,30 +24,6 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
     },
   ];
 
-  // const [result, _] = useQuery({
-  //   query: getProductsById,
-  //   variables: { ids: set.accessories.map((acc) => acc.pid) },
-  // });
-
-  // const { data, fetching, error } = result;
-
-  // if (fetching) return <Card>Loading...</Card>;
-  // if (error) return <Card>Error: {error.message}</Card>;
-
-  // Build the objects we need
-  // const fullSets = data.nodes
-  //   .map((res) => {
-  //     const accessory = set.accessories.filter((a) => a.pid === res.id)[0];
-  //     if (!accessory) return {};
-  //     return {
-  //       ...accessory,
-  //       title: res.title,
-  //       //img: res.images.edges[0].node.originalSrc,
-  //       alt: res.images.edges[0].node.altText,
-  //     };
-  //   })
-  //   .filter((acc) => acc.id); // Removes delete accessories
-
   return (
     <Card>
       <ResourceList

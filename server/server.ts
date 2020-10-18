@@ -4,13 +4,24 @@ import session from "koa-session";
 import Router from "koa-router";
 import staticServe from "koa-static";
 import cors from "@koa/cors";
+import {
+  DeliveryMethod,
+  receiveWebhook,
+  registerWebhook,
+} from "@shopify/koa-shopify-webhooks";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
 import next from "next";
 import initDB from "../utils/initDB";
 import { createMerchant } from "./createMerchant";
 import { installShopfront } from "./installShopfront";
-
+import { register } from "ts-node";
+import { receiveWebhooks, registerWebhooks } from "./webhooks/masterWebhook";
+import { masterApi } from "./api/masterAPI";
+import { createConnection } from "typeorm";
+import { Merchant } from "../entities/Merchant";
+import { AccessorySet } from "../entities/AccessorySet";
+import { Product } from "../entities/Product";
 dotenv.config();
 
 const port = parseInt(process.env.PORT!, 10) || 8081;
@@ -24,7 +35,16 @@ const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES, HOST } = process.env;
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
-  await initDB.check();
+  // Typeorm
+  await createConnection({
+    type: "postgres",
+    username: "postgres",
+    password: "1234",
+    port: 5432,
+    database: "shopify",
+    synchronize: true,
+    entities: [Merchant, AccessorySet, Product],
+  });
   // Serve the static script for the storefront
   server.use(
     cors({
@@ -54,9 +74,26 @@ app.prepare().then(async () => {
         ctx.redirect("/");
         // Create merchant
         createMerchant(shop);
+
+        // Webhooks
+        registerWebhooks(accessToken, shop);
       },
     })
   );
+
+  // Webhooks
+  const webhook = receiveWebhook({
+    secret: SHOPIFY_API_SECRET,
+    // onReceived: () => {
+    //   console.log("Webhook received");
+    // },
+  });
+  const masterWebhook = receiveWebhooks(webhook);
+  router.use("", masterWebhook.routes(), masterWebhook.allowedMethods());
+
+  // API
+  router.use("", masterApi().routes(), masterApi().allowedMethods());
+
   // Graphql proxy
   server.use(
     graphQLProxy({

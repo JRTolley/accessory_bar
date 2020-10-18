@@ -8,9 +8,7 @@ import {
 } from "@shopify/polaris";
 import Axios from "axios";
 import React, { useState } from "react";
-import { useQuery } from "urql";
 import { AccessorySet } from "../entities/AccessorySet";
-import { getProductsById } from "../graphql/queries/getProductsById";
 
 interface Props {
   sets: AccessorySet[];

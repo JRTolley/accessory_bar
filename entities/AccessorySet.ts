@@ -24,7 +24,7 @@ export class AccessorySet extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Product, { nullable: false, eager: true })
+  @OneToOne("Product", { nullable: false, eager: true })
   @JoinColumn()
   baseProduct!: Product;
 
@@ -36,7 +36,7 @@ export class AccessorySet extends BaseEntity {
   })
   merchant!: Merchant;
 
-  @ManyToMany(() => Product, (product) => product.sets, {
+  @ManyToMany("Product", "sets", {
     eager: true,
     cascade: true,
     onDelete: "CASCADE",

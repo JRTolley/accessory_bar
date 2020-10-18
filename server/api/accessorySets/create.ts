@@ -1,34 +1,34 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import Router from "koa-router";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
 import { Product } from "../../../entities/Product";
 import createNewProducts from "../../../utils/backend/createNewProducts";
-import initDB from "../../../utils/initDB";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log("> API: /api/accessorySets/create hit");
-  await initDB.check();
-  if (req.method === "POST" && req.body.accessories) {
+export function create(): Router {
+  const router = new Router();
+
+  router.post("/create", async (ctx, next) => {
     // Get Merchant
     const merchant = await Merchant.findOne({
-      shopName: req.cookies.shopOrigin,
+      shopName: ctx.cookies.get("shopOrigin"),
     });
 
+    console.log("Merchant: ", merchant);
     // Create new products
-    await createNewProducts(merchant, req.body.accessories);
+    await createNewProducts(merchant, ctx.request.body.accessories);
 
     // Don't waste energy on duplicates
     const existingSets = merchant.accessorySets.map(
       (set) => set.baseProduct.pid
     );
-    const toCreate = req.body.accessories.filter(
+    const toCreate = ctx.request.body.accessories.filter(
       (acc) => !existingSets.includes(acc.pid)
     );
 
     await Promise.all(
       toCreate.map(async (acc) => {
         const baseProduct = await Product.findOne({ pid: acc.pid });
-        console.log("BaseProduct: ", baseProduct);
+        // console.log("BaseProduct: ", baseProduct);
         return await AccessorySet.create({
           baseProduct,
           merchant: merchant,
@@ -37,12 +37,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     );
 
     const updatedMerchant = await Merchant.findOne({
-      shopName: req.cookies.shopOrigin,
+      shopName: ctx.cookies.get("shopOrigin"),
     });
-    res.status(200).json(updatedMerchant.accessorySets);
-  } else {
-    res.status(400).end();
-  }
+    ctx.response.status = 200;
+    ctx.response.body = updatedMerchant.accessorySets;
+  });
+  return router;
 }
-
-export default handler;

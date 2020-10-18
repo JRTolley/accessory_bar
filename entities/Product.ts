@@ -26,7 +26,7 @@ export class Product extends BaseEntity {
   @Column()
   pid!: string;
 
-  @ManyToMany(() => AccessorySet, (set) => set.accessories, {
+  @ManyToMany("AccessorySet", "accessories", {
     onDelete: "CASCADE",
   })
   @JoinTable()
@@ -43,9 +43,6 @@ export class Product extends BaseEntity {
 
   @Column()
   handle!: string;
-
-  @Column()
-  merchantId: string;
 
   @ManyToOne("Merchant", "products")
   merchant!: Merchant;
