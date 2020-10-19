@@ -1,6 +1,5 @@
 import { Merchant } from "../../entities/Merchant";
 import { Product } from "../../entities/Product";
-import initDB from "../initDB";
 
 async function createNewProducts(merchant: Merchant, products) {
   console.log("> Creating new products");

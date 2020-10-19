@@ -5,7 +5,6 @@ import {
 } from "@shopify/koa-shopify-webhooks/dist/src/register";
 import Router from "koa-router";
 import { Product } from "../../entities/Product";
-import initDB from "../../utils/initDB";
 
 const { HOST } = process.env;
 
@@ -33,8 +32,6 @@ export function receiveProductsUpdate(webhook): Router {
       `> ${ctx.state.webhook.domain} - Product Update webhook received`
     );
     // console.log("> Webhook: ", ctx.state.webhook);
-    const conn = await initDB.check();
-    console.log("> ConnV - ", conn.options.entities);
     const payload = ctx.state.webhook.payload;
     const pid = payload.admin_graphql_api_id;
     const toUpdate = await Product.findOne({ pid });

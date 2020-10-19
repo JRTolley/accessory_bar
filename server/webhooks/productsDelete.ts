@@ -5,7 +5,6 @@ import {
 } from "@shopify/koa-shopify-webhooks/dist/src/register";
 import Router from "koa-router";
 import { Product } from "../../entities/Product";
-import initDB from "../../utils/initDB";
 
 const { HOST } = process.env;
 
@@ -33,7 +32,6 @@ export function receiveProductsDelete(webhook): Router {
       `> ${ctx.state.webhook.domain} - Product Delete webhook received`
     );
     // console.log("> Webhook:  ", ctx.state.webhook);
-    await initDB.check();
     const payload = ctx.state.webhook.payload;
     const pid = `gid://shopify/Product/${payload.id}`;
     const toDelete = await Product.findOne({ pid });

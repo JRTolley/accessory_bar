@@ -1,27 +1,21 @@
-import dotenv from "dotenv";
-import Koa, { Context } from "koa";
-import session from "koa-session";
-import Router from "koa-router";
-import staticServe from "koa-static";
 import cors from "@koa/cors";
-import {
-  DeliveryMethod,
-  receiveWebhook,
-  registerWebhook,
-} from "@shopify/koa-shopify-webhooks";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
+import { receiveWebhook } from "@shopify/koa-shopify-webhooks";
+import dotenv from "dotenv";
+import Koa, { Context } from "koa";
+import Router from "koa-router";
+import session from "koa-session";
+import staticServe from "koa-static";
 import next from "next";
-import initDB from "../utils/initDB";
+import { createConnection } from "typeorm";
+import { AccessorySet } from "../entities/AccessorySet";
+import { Merchant } from "../entities/Merchant";
+import { Product } from "../entities/Product";
+import { masterApi } from "./api/masterAPI";
 import { createMerchant } from "./createMerchant";
 import { installShopfront } from "./installShopfront";
-import { register } from "ts-node";
 import { receiveWebhooks, registerWebhooks } from "./webhooks/masterWebhook";
-import { masterApi } from "./api/masterAPI";
-import { createConnection } from "typeorm";
-import { Merchant } from "../entities/Merchant";
-import { AccessorySet } from "../entities/AccessorySet";
-import { Product } from "../entities/Product";
 dotenv.config();
 
 const port = parseInt(process.env.PORT!, 10) || 8081;

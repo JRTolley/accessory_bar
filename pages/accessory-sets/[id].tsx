@@ -1,10 +1,21 @@
 import { ResourcePicker, TitleBar } from "@shopify/app-bridge-react";
-import { EmptyState, Frame, Layout, Loading, Page } from "@shopify/polaris";
+import {
+  EmptyState,
+  Frame,
+  Icon,
+  Layout,
+  Link,
+  Loading,
+  Page,
+  Stack,
+  TextStyle,
+} from "@shopify/polaris";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import ResourceListForAccessories from "../../components/ResourceListForAccessories";
 import accessoriesFromResources from "../../utils/frontend/accessoriesFromResources";
+import { MobileBackArrowMajor } from "@shopify/polaris-icons";
 
 const AccessorySetPage: React.FC = () => {
   const img =
@@ -62,6 +73,14 @@ const AccessorySetPage: React.FC = () => {
         }}
       />
       <Layout>
+        <Layout.Section>
+          <Link url="/accessory-sets/">
+            <Stack>
+              <Icon color="subdued" source={MobileBackArrowMajor} />
+              <TextStyle variation="subdued">Back to Sets</TextStyle>
+            </Stack>
+          </Link>
+        </Layout.Section>
         <Layout.Section>
           {!set || set.accessories.length === 0 ? (
             emptyState
