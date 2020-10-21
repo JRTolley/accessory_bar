@@ -3,6 +3,8 @@ import { masterShopfront } from "./storefront/masterStorefront";
 import bodyParser from "koa-body";
 import { masterAccessorySets } from "./accessorySets/masterAccessorySets";
 import { verifyRequest } from "@shopify/koa-shopify-auth";
+import { masterBilling } from "./billing/masterBilling";
+import { masterMerchant } from "./merchant/masterMerchant";
 
 export function masterApi(): Router {
   const masterApiRouter = new Router();
@@ -16,7 +18,12 @@ export function masterApi(): Router {
     await next();
   });
 
-  const apis = [masterShopfront(), masterAccessorySets()];
+  const apis = [
+    masterShopfront(),
+    masterAccessorySets(),
+    masterBilling(),
+    masterMerchant(),
+  ];
 
   apis.forEach((api) => {
     masterApiRouter.use("/api", api.routes(), api.allowedMethods());

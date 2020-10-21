@@ -42,4 +42,12 @@ export class AccessorySet extends BaseEntity {
     onDelete: "CASCADE",
   })
   accessories?: Product[];
+
+  @Column({ default: 0 })
+  impressions!: number;
+
+  async incrementImpressions() {
+    this.impressions++;
+    await this.save();
+  }
 }

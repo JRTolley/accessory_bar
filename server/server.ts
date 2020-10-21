@@ -3,6 +3,7 @@ import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import graphQLProxy, { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
 import { receiveWebhook } from "@shopify/koa-shopify-webhooks";
 import dotenv from "dotenv";
+import { access } from "fs";
 import Koa, { Context } from "koa";
 import Router from "koa-router";
 import session from "koa-session";
@@ -13,6 +14,7 @@ import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
 import { Product } from "../entities/Product";
 import { masterApi } from "./api/masterAPI";
+import { createSubscription } from "./billing/createSubscription";
 import { createMerchant } from "./createMerchant";
 import { installShopfront } from "./installShopfront";
 import { receiveWebhooks, registerWebhooks } from "./webhooks/masterWebhook";
@@ -65,12 +67,13 @@ app.prepare().then(async () => {
           sameSite: "none",
         });
         await installShopfront(accessToken, shop, HOST);
-        ctx.redirect("/");
+        // Create billing
+        // await createSubscription(ctx, 7.99);
         // Create merchant
-        createMerchant(shop);
-
+        await createMerchant(shop);
         // Webhooks
-        registerWebhooks(accessToken, shop);
+        await registerWebhooks(accessToken, shop);
+        ctx.redirect("/");
       },
     })
   );

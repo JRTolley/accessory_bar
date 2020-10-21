@@ -64,7 +64,14 @@ const AccessorySetPage: React.FC = () => {
   );
 
   return (
-    <Page>
+    <Page
+      breadcrumbs={[
+        {
+          content: "Accessory Sets",
+          url: "/accessory-sets",
+        },
+      ]}
+    >
       <TitleBar
         title="Add Accessories"
         primaryAction={{
@@ -73,14 +80,14 @@ const AccessorySetPage: React.FC = () => {
         }}
       />
       <Layout>
-        <Layout.Section>
+        {/* <Layout.Section>
           <Link url="/accessory-sets/">
             <Stack>
               <Icon color="subdued" source={MobileBackArrowMajor} />
               <TextStyle variation="subdued">Back to Sets</TextStyle>
             </Stack>
           </Link>
-        </Layout.Section>
+        </Layout.Section> */}
         <Layout.Section>
           {!set || set.accessories.length === 0 ? (
             emptyState

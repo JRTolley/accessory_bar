@@ -1,3 +1,4 @@
+import { access } from "fs";
 import Router from "koa-router";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
@@ -32,6 +33,7 @@ export function get() {
     } else {
       ctx.response.status = 200;
       ctx.response.body = accessorySet.accessories;
+      accessorySet.incrementImpressions();
     }
 
     next();
