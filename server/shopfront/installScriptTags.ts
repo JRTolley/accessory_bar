@@ -1,7 +1,9 @@
 import { createClient } from "urql";
-import { createScript } from "../graphql/mutations/createScript";
+import { createScript } from "../../graphql/mutations/createScript";
 
-export async function installShopfront(accessToken, shop, host) {
+export async function installScriptTags(ctx, host) {
+  const { accessToken, shop } = ctx.session;
+
   // Create urql client
   const client = createClient({
     url: `https://${shop}/admin/api/2020-07/graphql.json`,

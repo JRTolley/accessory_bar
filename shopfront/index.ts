@@ -1,7 +1,7 @@
 // @ts-ignore
 // Grab the product container and append
 const product = document.getElementById("ProductSection");
-const host = "https://e1be1171e9f9.ngrok.io";
+const host = "https://bbba9a8c9e6f.ngrok.io";
 // @ts-ignore
 
 async function main() {

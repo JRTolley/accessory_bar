@@ -103,7 +103,6 @@ const Billing: React.FC = () => {
       </Card.Section>
       <Card.Section>
         <Button
-          disabled
           onClick={() => {
             subscribeButton("full");
           }}
@@ -155,7 +154,7 @@ const Billing: React.FC = () => {
       {loading ? loadingLayout : null}
       <Layout>
         <Layout.Section oneThird>{betaPlan}</Layout.Section>
-        <Layout.Section oneThird>{fakePlan}</Layout.Section>
+        <Layout.Section oneThird>{fullPlan}</Layout.Section>
         <Layout.Section oneThird>{fakePlan}</Layout.Section>
       </Layout>
     </Page>

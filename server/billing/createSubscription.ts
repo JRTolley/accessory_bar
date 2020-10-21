@@ -27,7 +27,7 @@ export async function createSubscription(ctx, name, price) {
     result.data.appSubscriptionCreate.userErrors
   );
   // console.log("Redirecting");
-  console.log(`> ${shop} - Subscription Created`);
+  console.log(`> ${shop} - Subscription Confirmation Url generated`);
   const confirmationUrl = result.data.appSubscriptionCreate.confirmationUrl;
   const withoutShop = confirmationUrl.split("/").slice(4).join("/");
   return withoutShop;

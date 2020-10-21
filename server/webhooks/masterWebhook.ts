@@ -12,7 +12,8 @@ import {
   registerProductsUpdate,
 } from "./productsUpdate";
 
-export async function registerWebhooks(accessToken, shop) {
+export async function registerWebhooks(ctx) {
+  const { accessToken, shop } = ctx.session;
   await registerProductsUpdate(accessToken, shop);
   await registerProductsDelete(accessToken, shop);
   await registerAppSubscriptionUpdate(accessToken, shop);
