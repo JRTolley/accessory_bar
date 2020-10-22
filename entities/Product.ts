@@ -44,6 +44,14 @@ export class Product extends BaseEntity {
   @Column()
   handle!: string;
 
+  @Column({ default: 0 })
+  clickthroughs!: number;
+
   @ManyToOne("Merchant", "products")
   merchant!: Merchant;
+
+  async incrementClickthroughs() {
+    this.clickthroughs++;
+    await this.save();
+  }
 }

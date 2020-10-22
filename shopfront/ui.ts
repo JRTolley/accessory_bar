@@ -1,3 +1,12 @@
+async function registerClickthrough(item) {
+  await fetch(`${host}/api/storefront/registerClickthrough`, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(item.pid),
+  });
+  window.location = item.handle;
+}
+
 function uiCreateProduct(item_json): HTMLLIElement {
   const element = document.createElement("li");
   element.style.display = "flex";
@@ -9,7 +18,10 @@ function uiCreateProduct(item_json): HTMLLIElement {
   picture.src = item_json.img;
   // Link Text
   const link = document.createElement("a");
-  link.href = item_json.handle;
+  link.onclick = () => {
+    registerClickthrough(item_json);
+  };
+  // link.href = item_json.handle;
   link.appendChild(document.createTextNode(item_json.title));
   // Price
   const price = document.createElement("p");

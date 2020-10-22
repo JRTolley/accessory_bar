@@ -42,7 +42,7 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
   );
 
   function renderItem(item) {
-    const { id, accessories, baseProduct } = item;
+    const { id, accessories, baseProduct, impressions } = item;
     const { img, title } = baseProduct;
     const media = <Thumbnail source={img} alt={"no-set"} />;
     return (
@@ -54,6 +54,12 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
           <div>
             <TextStyle variation="subdued">Accessories: </TextStyle>
             <TextStyle variation="strong">{accessories.length || 0}</TextStyle>
+          </div>
+        </Stack>
+        <Stack>
+          <div>
+            <TextStyle variation="subdued">Impressions: </TextStyle>
+            <TextStyle variation="strong">{impressions}</TextStyle>
           </div>
         </Stack>
       </ResourceItem>

@@ -39,11 +39,12 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
   );
 
   function renderItem(item) {
-    const { id, pid, title, img } = item;
+    const { id, pid, title, img, clickthroughs } = item;
     const media = <Thumbnail source={img} alt={"not-set"} />;
     return (
       <ResourceItem id={id} onClick={null} media={media}>
         <TextStyle variation="strong">{title}</TextStyle>
+        {clickthroughs}
       </ResourceItem>
     );
   }
