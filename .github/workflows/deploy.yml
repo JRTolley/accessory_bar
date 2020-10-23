@@ -36,15 +36,16 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: jackjttech/accessory_bar/deploy
+          registry: ghcr.io
           tag_with_ref: true
       - name: Push to github Packages
         uses: docker/build-push-action@v2
         with:
+          push: true
           context: .
           file: ./Dockerfile
-          tags: jackjttech/accessory_bar:latest
+          tags: ghcr.io/jackjttech/accessory_bar:latest
+          registry: docker.pkg.github.com
         env:
           CI: true
 # stage:
