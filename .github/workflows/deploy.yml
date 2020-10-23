@@ -41,27 +41,27 @@ jobs:
           tag_with_ref: true
         env:
           CI: true
-  stage:
-    runs-on: ubuntu-20.04
-    name: Deploy to staging
-    needs: build
-    steps:
-      - name: Log into server
-        env:
-          SERVER: staging
-  production:
-    runs-on: ubuntu-20.04
-    name: Deploy to production
-    needs: stage
-    steps:
-      - name: log into server
-        env:
-          SERVER: production
-  rollback:
-    runs-on: ubuntu-20.04
-    name: Rollback in case of failure
-    needs: production
-    steps:
-      - name: log into server
-        env:
-          Server: production
+  # stage:
+  #   runs-on: ubuntu-20.04
+  #   name: Deploy to staging
+  #   needs: build
+  #   steps:
+  #     - name: Log into server
+  #       env:
+  #         SERVER: staging
+  # production:
+  #   runs-on: ubuntu-20.04
+  #   name: Deploy to production
+  #   needs: stage
+  #   steps:
+  #     - name: log into server
+  #       env:
+  #         SERVER: production
+  # rollback:
+  #   runs-on: ubuntu-20.04
+  #   name: Rollback in case of failure
+  #   needs: production
+  #   steps:
+  #     - name: log into server
+  #       env:
+  #         Server: production
