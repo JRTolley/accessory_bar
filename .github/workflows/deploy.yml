@@ -51,18 +51,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-        # - name: Log into server
-        #   run: ssh ubuntu@3.138.185.151 && ls
+      - name: Log into server
+        run: ssh ubuntu@3.138.185.151 && ls
         env:
           SERVER: staging
-  production:
-    runs-on: ubuntu-20.04
-    name: Deploy to production
-    needs: stage
-    steps:
-      - name: log into server
-        env:
-          SERVER: production
+  # production:
+  #   runs-on: ubuntu-20.04
+  #   name: Deploy to production
+  #   needs: stage
+  #   steps:
+  #     - name: log into server
+  #       env:
+  #         SERVER: production
 # rollback:
 #   runs-on: ubuntu-20.04
 #   name: Rollback in case of failure
