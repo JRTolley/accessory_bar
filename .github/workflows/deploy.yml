@@ -1,0 +1,67 @@
+name: Deploy Accessory Bar
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: action/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+      - run: npm ci
+      - name: Test
+      - run: npm run build --if-present
+      - run: npm test --if-present
+        env:
+          CI: true
+  build:
+    runs-on: ubuntu-20.04
+    name: Build and Push Docker Image to Github Packages
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to github Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: JackJTTech/accessory_bar/deploy
+          tag_with_ref: true
+        env:
+          CI: true
+  stage:
+    runs-on: ubuntu-20.04
+    name: Deploy to staging
+    needs: build
+    steps:
+      - name: Log into server
+        env:
+          SERVER: staging
+  production:
+    runs-on: ubuntu-20.04
+    name: Deploy to production
+    needs: stage
+    steps:
+      - name: log into server
+        env:
+          SERVER: production
+  rollback:
+    runs-on: ubuntu-20.04
+    name: Rollback in case of failure
+    needs: production
+    steps:
+      - name: log into server
+        env:
+          Server: production
