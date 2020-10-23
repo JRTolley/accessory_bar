@@ -5,7 +5,6 @@ async function getSettings() {
   const script_json = JSON.parse(script_content);
 
   const body = { product_id: script_json.id };
-
   // Retrieve the Accessories to display
   const res = await fetch(`${host}/api/storefront/get`, {
     method: "POST",

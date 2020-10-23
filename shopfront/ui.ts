@@ -1,8 +1,17 @@
 async function registerClickthrough(item) {
+  const script = document.getElementById("ProductJson-product-template");
+  const script_content = script.firstChild.textContent;
+  const script_json = JSON.parse(script_content);
+
+  const body = { product_id: script_json.id };
+
   await fetch(`${host}/api/storefront/registerClickthrough`, {
     method: "POST",
     credentials: "include",
-    body: JSON.stringify(item.pid),
+    body: JSON.stringify({
+      product_id: item.pid,
+      set_pid: body.product_id,
+    }),
   });
   window.location = item.handle;
 }

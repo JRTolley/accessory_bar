@@ -19,7 +19,8 @@ export async function installScriptTags(ctx, host) {
   const res = await client
     .query(createScript, {
       displayScope: "ONLINE_STORE",
-      src: `${host}/index.min.js`,
+      // src: `${host}/index.min.js`,
+      src: `https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min.js?v=1603464992`,
     })
     .toPromise();
 

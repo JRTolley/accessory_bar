@@ -6,11 +6,13 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { AccessorySet } from "./AccessorySet";
 import { Merchant } from "./Merchant";
+import { StoreEvent } from "./StoreEvent";
 
 @Entity()
 export class Product extends BaseEntity {
@@ -44,14 +46,9 @@ export class Product extends BaseEntity {
   @Column()
   handle!: string;
 
-  @Column({ default: 0 })
-  clickthroughs!: number;
-
   @ManyToOne("Merchant", "products")
   merchant!: Merchant;
 
-  async incrementClickthroughs() {
-    this.clickthroughs++;
-    await this.save();
-  }
+  @OneToMany(() => StoreEvent, (event) => event.product)
+  storeEvents?: Promise<StoreEvent[]>;
 }

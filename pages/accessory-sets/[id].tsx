@@ -34,7 +34,7 @@ const AccessorySetPage: React.FC = () => {
       // Gotta check this because id will be undefined on first render
       console.log("This is the id: ", id);
       axios.post(`/api/accessorySets/get`, { id: id }).then((res) => {
-        setSet(res.data[0]);
+        setSet(res.data);
         console.log("Post get: ", res);
         setLoading(false);
       });

@@ -4,5 +4,6 @@
     "moduleResolution": "node",
     "isolatedModules": false
   },
-  "include": ["./shopfront/*.ts"]
+  "include": ["./shopfront/*.ts"],
+  "exclude": ["node_modules"]
 }

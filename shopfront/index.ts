@@ -1,7 +1,7 @@
 // @ts-ignore
 // Grab the product container and append
 const product = document.getElementById("ProductSection");
-const host = "https://bbba9a8c9e6f.ngrok.io";
+const host = "https://1b98bc5c33b1.ngrok.io";
 // @ts-ignore
 
 async function main() {
@@ -9,6 +9,7 @@ async function main() {
 
   if (product_json !== null) {
     // If a product set has actually been configured
+    // @ts-ignore
     product.appendChild(uiMain(product_json));
   }
 }

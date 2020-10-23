@@ -6,12 +6,14 @@ import {
   JoinColumn,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Merchant } from "./Merchant";
 import { Product } from "./Product";
+import { StoreEvent } from "./StoreEvent";
 
 @Entity()
 export class AccessorySet extends BaseEntity {
@@ -42,6 +44,9 @@ export class AccessorySet extends BaseEntity {
     onDelete: "CASCADE",
   })
   accessories?: Product[];
+
+  @OneToMany(() => StoreEvent, (event) => event.set)
+  storeEvents?: StoreEvent[];
 
   @Column({ default: 0 })
   impressions!: number;

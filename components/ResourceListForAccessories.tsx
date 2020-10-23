@@ -23,6 +23,7 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
       onAction: () => deleteAccessories(),
     },
   ];
+  console.log("Set: ", set);
 
   return (
     <Card>
@@ -39,12 +40,14 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
   );
 
   function renderItem(item) {
-    const { id, pid, title, img, clickthroughs } = item;
+    console.log("Item: ", item);
+    const { id, pid, title, img, storeEventsCount } = item;
     const media = <Thumbnail source={img} alt={"not-set"} />;
     return (
       <ResourceItem id={id} onClick={null} media={media}>
         <TextStyle variation="strong">{title}</TextStyle>
-        {clickthroughs}
+        <br />
+        <TextStyle variation="strong">{storeEventsCount}</TextStyle>
       </ResourceItem>
     );
   }

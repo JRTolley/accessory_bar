@@ -12,6 +12,7 @@ import { createConnection } from "typeorm";
 import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
 import { Product } from "../entities/Product";
+import { StoreEvent } from "../entities/StoreEvent";
 import { masterApi } from "./api/masterAPI";
 import { createMerchant } from "./createMerchant";
 import { installScriptTags } from "./shopfront/installScriptTags";
@@ -37,7 +38,7 @@ app.prepare().then(async () => {
     port: 5432,
     database: "shopify",
     synchronize: true,
-    entities: [Merchant, AccessorySet, Product],
+    entities: [Merchant, AccessorySet, Product, StoreEvent],
   });
   // Serve the static script for the storefront
   server.use(
