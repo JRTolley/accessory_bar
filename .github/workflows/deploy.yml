@@ -52,7 +52,9 @@ jobs:
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Log into server
-        run: ssh ubuntu@3.138.185.151 && ls
+        run: ssh ubuntu@3.138.185.151 && ls &&
+      - name: Pull docker image
+        run: docker pull docker.pkg.github.com/jackjttech/accessory_bar/latest:latest
         env:
           SERVER: staging
   # production:
