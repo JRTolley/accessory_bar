@@ -53,7 +53,9 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Log into server
         run: ssh ubuntu@3.138.185.151 && ls
-      - name: Pull docker image
+      - name: Login to docker
+        run: docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull Image
         run: docker pull docker.pkg.github.com/jackjttech/accessory_bar/latest:latest
         env:
           SERVER: staging
