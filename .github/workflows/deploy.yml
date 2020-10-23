@@ -32,12 +32,36 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to github Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: JackJTTech/accessory_bar/deploy
+          repository: jackjttech/accessory_bar/deploy
           tag_with_ref: true
         env:
           CI: true
+# stage:
+#   runs-on: ubuntu-20.04
+#   name: Deploy to staging
+#   needs: build
+#   steps:
+#     - name: Log into server
+#       env:
+#         SERVER: staging
+# production:
+#   runs-on: ubuntu-20.04
+#   name: Deploy to production
+#   needs: stage
+#   steps:
+#     - name: log into server
+#       env:
+#         SERVER: production
+# rollback:
+#   runs-on: ubuntu-20.04
+#   name: Rollback in case of failure
+#   needs: production
+#   steps:
+#     - name: log into server
+#       env:
+#         Server: production
