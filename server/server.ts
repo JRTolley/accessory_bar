@@ -31,12 +31,14 @@ app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   // Typeorm
+  console.log("Password: ", process.env.TYPEORM_PASSWORD);
   await createConnection({
     type: "postgres",
-    username: "postgres",
-    password: "1234",
+    host: process.env.TYPEORM_HOST,
+    username: process.env.TYPEORM_USER,
+    password: process.env.TYPEORM_PASSWORD,
     port: 5432,
-    database: "shopify",
+    database: process.env.TYPEORM_DATABASE,
     synchronize: true,
     entities: [Merchant, AccessorySet, Product, StoreEvent],
   });
