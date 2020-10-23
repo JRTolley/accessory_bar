@@ -45,7 +45,6 @@ jobs:
           context: .
           file: ./Dockerfile
           tags: jackjttech/accessory_bar:latest
-          push: true
         env:
           CI: true
 # stage:
