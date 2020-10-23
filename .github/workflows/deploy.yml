@@ -40,7 +40,7 @@ jobs:
   #         repository: jackjttech/accessory_bar/latest
   #         dockerfile: ./Dockerfile
   #         tag_with_ref: true
-  #         CI: true
+  #        CI: true
   stage:
     runs-on: ubuntu-20.04
     name: Deploy to staging
