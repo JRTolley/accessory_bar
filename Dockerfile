@@ -3,8 +3,8 @@ FROM node:14.14.0-alpine3.12 as app
 WORKDIR /src
 
 # Enviroment
-ENV SHOPIFY_API_KEY=18418c246eba8f2725f102ea503e9fe0
-ENV SHOPIFY_API_SECRET=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
+ENV SHOPIFY_API_KEY=9660ecc408a6a27343dd5357cc3b197c
+ENV SHOPIFY_API_SECRET=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
 ENV SHOP=shoppingproductsrus.myshopify.com
 ENV SCOPES=write_products,write_customers,write_draft_orders,write_script_tags,read_script_tags
 ENV HOST=https://staging.accessorybar.jttech.dev 
