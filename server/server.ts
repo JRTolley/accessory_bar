@@ -31,7 +31,7 @@ app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   // Typeorm
-  console.log("Password: ", process.env.TYPEORM_PASSWORD);
+  console.log("ENV: ", process.env);
   await createConnection({
     type: "postgres",
     host: process.env.TYPEORM_HOST,
