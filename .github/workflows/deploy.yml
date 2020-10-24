@@ -64,7 +64,7 @@ jobs:
       - name: Docker down anything already running
         run: docker-compose down -v
       - name: Docker up
-        run: sudo docker-compose up -d && sudo ls
+        run: sudo docker-compose up --build -d && sudo ls
       - name: Docker check
         run: sudo docker-compose ps
         env:
