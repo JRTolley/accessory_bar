@@ -60,7 +60,7 @@ jobs:
       - name: Log into server
         run: ssh ubuntu@3.138.185.151 && ls
       - name: Login to docker
-        run: sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+        run: sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} && ls
       - name: Docker down anything already running
         run: sudo docker-compose down -v
       - name: Docker up
