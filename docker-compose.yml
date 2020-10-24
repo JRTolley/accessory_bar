@@ -15,6 +15,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - /webroot:/var/www/html
       - ./nginx:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/lib/letsencrypt:/var/lib/letsencrypt
