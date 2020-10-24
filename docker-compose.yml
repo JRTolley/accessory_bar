@@ -15,41 +15,14 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - dhparam:/etc/ssl/certs
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
+      - /home/ubuntu/dhparam:/etc/ssl/certs
     depends_on:
       - nodejs
     networks:
       - app-network
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email jack@jacktolley.com --agree-tos --no-eff-email --staging -d staging.accessorybar.jttech.dev
-volumes:
-  certbot-etc:
-  certbot-var:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ubuntu/views
-      o: bind
-  dhparam:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ubuntu/dhparam/
-      o: bind
-
 networks:
   app-network:
     driver: bridge
