@@ -58,9 +58,9 @@ app.prepare().then(async () => {
       apiKey: SHOPIFY_API_KEY,
       secret: SHOPIFY_API_SECRET,
       scopes: [SCOPES],
-
       async afterAuth(ctx: Context) {
         // Set up cookies
+        console.log("Creating auuth! ");
         const { shop, accessToken } = ctx.session;
         ctx.cookies.set("shopOrigin", shop, {
           httpOnly: false,
