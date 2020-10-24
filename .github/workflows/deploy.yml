@@ -67,8 +67,8 @@ jobs:
         run: sudo docker-compose up --build -d && sudo ls
       - name: Docker check
         run: sudo docker-compose ps
-        env:
-          SERVER: staging
+        # env:
+        #   SERVER: staging
   # production:
   #   runs-on: ubuntu-20.04
   #   name: Deploy to production
