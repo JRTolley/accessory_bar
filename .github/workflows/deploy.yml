@@ -53,8 +53,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}#
-      - name: ls
-        run: cd /home/runner/work/accessory_bar/accessory_bar && ls
       - name: Sync docker compose file
         run: rsync ./docker-compose.yml ubuntu@3.138.185.151:/home/ubuntu
       - name: Sync nginx default conf
@@ -63,10 +61,10 @@ jobs:
         run: ssh ubuntu@3.138.185.151 && ls
       - name: Login to docker
         run: sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
-      - name: Pull Image
-        run: sudo docker pull docker.pkg.github.com/jackjttech/accessory_bar/latest:latest
-      - name: Run docker image
-        run: sudo docker run --publish 8081:8081 docker.pkg.github.com/jackjttech/accessory_bar/latest:latest
+      - name: Docker down anything already running
+        run: sudo docker-compose down -v
+      - name: Docker up
+        run: sudo docker-compose up -d
         env:
           SERVER: staging
   # production:
