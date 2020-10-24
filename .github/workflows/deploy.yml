@@ -56,9 +56,9 @@ jobs:
       - name: ls
         run: cd /home/runner/work/accessory_bar/accessory_bar && ls
       - name: Sync docker compose file
-        run: rsync docker-compose.yml ubuntu@3.138.185.151:/home/ubuntu
+        run: rsync ./docker-compose.yml ubuntu@3.138.185.151:/home/ubuntu
       - name: Sync nginx default conf
-        run: rsync /github/workspace/nginx/ ubuntu@3.138.185.151
+        run: rsync ./nginx/ ubuntu@3.138.185.151:/home/ubuntu
       - name: Log into server
         run: ssh ubuntu@3.138.185.151 && ls
       - name: Login to docker
