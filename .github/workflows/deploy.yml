@@ -62,9 +62,9 @@ jobs:
       - name: Login to docker
         run: sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} && ls
       - name: Docker down anything already running
-        run: sudo docker-compose down -v
+        run: docker-compose down -v
       - name: Docker up
-        run: sudo docker-compose up -d
+        run: docker-compose up -d && ls
       - name: Docker check
         run: sudo docker-compose ps
         env:
