@@ -13,16 +13,18 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     depends_on:
       - nodejs
     networks:
       - app-network
-  ertbot:
+  certbot:
     image: certbot/certbot
     container_name: certbot
     volumes:
@@ -40,6 +42,12 @@ volumes:
     driver_opts:
       type: none
       device: /home/ubuntu/
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/dhparam/
       o: bind
 
 networks:
