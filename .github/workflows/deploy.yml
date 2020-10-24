@@ -43,6 +43,7 @@ jobs:
   stage:
     runs-on: ubuntu-20.04
     name: Deploy to staging
+    needs: build
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
