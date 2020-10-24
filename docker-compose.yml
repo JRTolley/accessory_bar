@@ -15,15 +15,19 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /webroot:/var/www/html
       - ./nginx:/etc/nginx/conf.d
-      - /etc/letsencrypt:/etc/letsencrypt
-      - /var/lib/letsencrypt:/var/lib/letsencrypt
-      - /home/ubuntu/dhparam:/etc/ssl/certs
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - nodejs
     networks:
       - app-network
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+
 networks:
   app-network:
     driver: bridge
