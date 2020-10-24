@@ -57,16 +57,14 @@ jobs:
         run: rsync ./docker-compose.yml ubuntu@3.138.185.151:/home/ubuntu
       - name: Sync nginx default conf
         run: rsync nginx/default.conf ubuntu@3.138.185.151:/home/ubuntu/nginx/default.conf
-      - name: Log into server
-        run: ssh -t ubuntu@3.138.185.151 ls
-      - name: Login to docker
-        run: sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} && ls
+      - name: Log into docker
+        run: ssh -t ubuntu@3.138.185.151 sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
       - name: Docker down anything already running
-        run: docker-compose down -v
+        run: ssh -t ubuntu@3.138.185.151 sudo docker-compose down -v
       - name: Docker up
-        run: sudo docker-compose up --build -d && sudo ls
+        run: ssh -t ubuntu@3.138.185.151 sudo docker-compose up -d
       - name: Docker check
-        run: sudo docker-compose ps
+        run: ssh -t ubuntu@3.138.185.151 sudo docker-compose ps
         # env:
         #   SERVER: staging
   # production:
