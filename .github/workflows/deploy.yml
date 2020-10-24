@@ -65,6 +65,8 @@ jobs:
         run: sudo docker-compose down -v
       - name: Docker up
         run: sudo docker-compose up -d
+      - name: Docker check
+        run: sudo docker-compose ps
         env:
           SERVER: staging
   # production:
