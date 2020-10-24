@@ -50,11 +50,12 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}#
+
       - name: Sync docker compose file
-        uses: rsync ./docker-compose.yml ubuntu@3.138.185.151:/
+        run: rsync ./docker-compose.yml ubuntu@3.138.185.151:/
       - name: Sync nginx default conf
-        uses: rsync ./nginx ubuntu@3.138.185.151:/nginx
+        run: rsync ./nginx ubuntu@3.138.185.151:/nginx
       - name: Log into server
         run: ssh ubuntu@3.138.185.151 && ls
       - name: Login to docker
