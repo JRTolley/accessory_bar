@@ -25,25 +25,25 @@ jobs:
   #     - run: npm test --if-present
   #       env:
   #         CI: true
-  # build:
-  #   runs-on: ubuntu-20.04
-  #   name: Build and Push Docker Image to Github Packages
-  #   steps:
-  #     - name: Checkout the repo
-  #       uses: actions/checkout@v2
-  #     - name: Push to github packages
-  #       uses: docker/build-push-action@v1
-  #       with:
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-  #         registry: docker.pkg.github.com
-  #         repository: jackjttech/accessory_bar/latest
-  #         dockerfile: ./Dockerfile
-  #         tag_with_ref: true
+  build:
+    runs-on: ubuntu-20.04
+    name: Build and Push Docker Image to Github Packages
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Push to github packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: jackjttech/accessory_bar/latest
+          dockerfile: ./Dockerfile
+          tag_with_ref: true
   stage:
     runs-on: ubuntu-20.04
     name: Deploy to staging
-    # needs: build
+    needs: build
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
