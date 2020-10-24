@@ -45,6 +45,8 @@ jobs:
     runs-on: ubuntu-20.04
     name: Deploy to staging
     steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
