@@ -1,4 +1,4 @@
-FROM node:14.14.0-alpine3.12
+FROM node:14.14.0-alpine3.12 as app
 
 WORKDIR /src
 
@@ -21,3 +21,4 @@ COPY . .
 RUN npm run build
 EXPOSE 8081 5432
 CMD [ "npm", "run", "start" ]
+
