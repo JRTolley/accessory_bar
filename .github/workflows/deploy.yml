@@ -54,7 +54,7 @@ jobs:
       - name: ls
         run: ls
       - name: Sync docker compose file
-        run: rsync /github/workspace/docker-compose.yml ubuntu@3.138.185.151:/
+        run: rsync docker-compose.yml ubuntu@3.138.185.151:/
       - name: Sync nginx default conf
         run: rsync /github/workspace/nginx/ ubuntu@3.138.185.151:/nginx
       - name: Log into server
