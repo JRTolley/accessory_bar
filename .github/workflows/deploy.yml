@@ -52,7 +52,7 @@ jobs:
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}#
       - name: ls
-        run: ls
+        run: cd /home/runner/work/accessory_bar && ls
       - name: Sync docker compose file
         run: rsync docker-compose.yml ubuntu@3.138.185.151:/
       - name: Sync nginx default conf
