@@ -18,7 +18,7 @@ jobs:
       # - name: Sync docker compose file
       #   run: rsync ./docker-compose-production.yml ubuntu@3.138.185.151:/home/ubuntu
       - name: Remove compose file
-        run: ssh -t ubuntu:3.138.185.151 sudo rm docker-compose.yml
+        run: ssh -t ubuntu@3.138.185.151 sudo rm docker-compose.yml
       - name: Rename compose file
         run: ssh -t ubuntu@3.138.185.151 sudo mv docker-compose-production.yml docker-compose.yml
       - name: Sync nginx default conf
