@@ -5,26 +5,26 @@ on:
     branches:
       - master
 jobs:
-  # test:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: "14.x"
-  #     - name: Cache Node.js modules
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - name: Test
-  #       run: npm run build --if-present
-  #     - run: npm test --if-present
-  #       env:
-  #         CI: true
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Test
+        run: npm run build --if-present
+      - run: npm test --if-present
+        env:
+          CI: true
   build:
     runs-on: ubuntu-20.04
     name: Build and Push Docker Image to Github Packages
@@ -43,7 +43,9 @@ jobs:
   stage:
     runs-on: ubuntu-20.04
     name: Deploy to staging
-    needs: build
+    needs:
+      - test
+      - build
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
@@ -54,15 +56,17 @@ jobs:
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}#
       - name: Sync docker compose file
-        run: rsync ./docker-compose.yml ubuntu@3.138.185.151:/home/ubuntu
+        run: rsync ./docker-compose-staging.yml ubuntu@3.138.185.151:/home/ubuntu
+      - name: Rename compose file
+        run: sudo mv /home/ubuntu/docker-compose-staging.yml /home/ubuntu/docker-compose.yml
       - name: Sync nginx default conf
-        run: rsync nginx/default.conf ubuntu@3.138.185.151:/home/ubuntu/nginx/default.conf
+        run: rsync nginx/staging/default.conf ubuntu@3.138.185.151:/home/ubuntu/nginx/default.conf
       - name: Log into docker
         run: ssh -t ubuntu@3.138.185.151 sudo docker login https://docker.pkg.github.com -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
-      - name: Docker down anything already running
-        run: ssh -t ubuntu@3.138.185.151 sudo docker-compose down -v
       - name: Get latest docker images
         run: ssh -t ubuntu@3.138.185.151 sudo docker-compose pull
+      - name: Docker down anything already running
+        run: ssh -t ubuntu@3.138.185.151 sudo docker-compose down -v
       - name: Docker up
         run: ssh -t ubuntu@3.138.185.151 sudo docker-compose up -d
       - name: Docker check
