@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - ".github/workflows/production.yml"
 jobs:
   test:
     runs-on: ubuntu-20.04
