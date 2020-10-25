@@ -8,9 +8,9 @@ services:
     networks:
       - app-network
     environment:
-      - SHOPIFY_API_KEY=9660ecc408a6a27343dd5357cc3b197c
-      - SHOPIFY_API_SECRET=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
-      - HOST=https://staging.accessorybar.jttech.dev
+      - SHOPIFY_API_KEY=38b443ca48b137615d92fa5b6db4633fc
+      - SHOPIFY_API_SECRET=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
+      - HOST=https://production.accessorybar.jttech.dev
       - TYPEORM_DATABASE=staging
   nginx:
     image: nginx:mainline-alpine
