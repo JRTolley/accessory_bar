@@ -57,8 +57,10 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}#
       - name: Sync docker compose file
         run: rsync ./docker-compose-staging.yml ubuntu@3.138.185.151:/home/ubuntu
+      - name: Remove compose file
+        run: sudo rm docker-compose.yml
       - name: Rename compose file
-        run: sudo mv /home/ubuntu/docker-compose-staging.yml /home/ubuntu/docker-compose.yml
+        run: sudo mv docker-compose-staging.yml docker-compose.yml
       - name: Sync nginx default conf
         run: rsync nginx/staging/default.conf ubuntu@3.138.185.151:/home/ubuntu/nginx/default.conf
       - name: Log into docker
