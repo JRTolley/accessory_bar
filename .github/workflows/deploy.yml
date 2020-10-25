@@ -1,4 +1,4 @@
-name: Deploy Accessory Bar
+name: Deploy Accessory Bar To Staging
 
 on:
   push:
@@ -28,6 +28,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     name: Build and Push Docker Image to Github Packages
+    needs:
+      - test
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
@@ -44,7 +46,6 @@ jobs:
     runs-on: ubuntu-20.04
     name: Deploy to staging
     needs:
-      - test
       - build
     steps:
       - name: Checkout the repo
@@ -54,7 +55,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}#
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Sync docker compose file
         run: rsync ./docker-compose-staging.yml ubuntu@3.138.185.151:/home/ubuntu
       - name: Remove compose file
@@ -73,19 +74,3 @@ jobs:
         run: ssh -t ubuntu@3.138.185.151 sudo docker-compose up -d
       - name: Docker check
         run: ssh -t ubuntu@3.138.185.151 sudo docker-compose ps
-  # production:
-  #   runs-on: ubuntu-20.04
-  #   name: Deploy to production
-  #   needs: stage
-  #   steps:
-  #     - name: log into server
-  #       env:
-  #         SERVER: production
-# rollback:
-#   runs-on: ubuntu-20.04
-#   name: Rollback in case of failure
-#   needs: production
-#   steps:
-#     - name: log into server
-#       env:
-#         Server: production
