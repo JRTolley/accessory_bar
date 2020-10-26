@@ -15,7 +15,7 @@ class MyApp extends App {
     return (
       <Provider
         config={{
-          apiKey: API_KEY,
+          apiKey: process.env.API_KEY,
           shopOrigin: shopOrigin,
           forceRedirect: true,
         }}
