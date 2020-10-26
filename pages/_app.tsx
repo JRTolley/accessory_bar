@@ -15,7 +15,8 @@ class MyApp extends App {
     return (
       <Provider
         config={{
-          apiKey: "18418c246eba8f2725f102ea503e9fe0",
+          // @ts-expect-error APIKEY located in next.config.js
+          apiKey: API_KEY,
           shopOrigin: shopOrigin,
           forceRedirect: true,
         }}
