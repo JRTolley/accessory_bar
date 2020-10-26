@@ -30,8 +30,8 @@ const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES, HOST } = process.env;
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
+  console.log(`> Starting for database ${process.env.TYPEORM_DATABASE}`);
   // Typeorm
-  console.log("ENV: ", process.env);
   await createConnection({
     type: "postgres",
     host: process.env.TYPEORM_HOST,
