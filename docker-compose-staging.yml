@@ -12,7 +12,7 @@ services:
     #   - SHOPIFY_API_SECRET=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
     #   - HOST=https://staging.accessorybar.jttech.dev
     #   - TYPEORM_DATABASE=staging
-    command: bash -c "npm run build && npm run start"
+    # command: bash -c "npm run build && npm run start"
   nginx:
     image: nginx:mainline-alpine
     container_name: nginx
