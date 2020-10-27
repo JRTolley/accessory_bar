@@ -22,7 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     name: Deploy to production
-    needs: production
+    needs: build
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
