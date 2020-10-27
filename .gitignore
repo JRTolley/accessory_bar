@@ -18,4 +18,4 @@ logs
 config/tunnel.pid
 
 # next build output
-.next/
+.next

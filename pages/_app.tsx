@@ -12,6 +12,7 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     const shopOrigin = Cookies.get("shopOrigin");
+    // console.log("KET KEY: ", process.env.API_KEY);
     return (
       <Provider
         config={{
