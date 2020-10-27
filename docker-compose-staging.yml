@@ -2,16 +2,16 @@ version: "3"
 
 services:
   nodejs:
-    image: docker.pkg.github.com/jackjttech/accessory_bar/latest:latest
+    image: docker.pkg.github.com/jackjttech/accessory_bar/staging:latest
     container_name: nodejs
     restart: unless-stopped
     networks:
       - app-network
-    environment:
-      - SHOPIFY_API_KEY=9660ecc408a6a27343dd5357cc3b197c
-      - SHOPIFY_API_SECRET=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
-      - HOST=https://staging.accessorybar.jttech.dev
-      - TYPEORM_DATABASE=staging
+    # environment:
+    #   - SHOPIFY_API_KEY=9660ecc408a6a27343dd5357cc3b197c
+    #   - SHOPIFY_API_SECRET=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
+    #   - HOST=https://staging.accessorybar.jttech.dev
+    #   - TYPEORM_DATABASE=staging
     command: bash -c "npm run build && npm run start"
   nginx:
     image: nginx:mainline-alpine

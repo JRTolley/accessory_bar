@@ -42,8 +42,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: jackjttech/accessory_bar/latest
-          dockerfile: ./Dockerfile
+          repository: jackjttech/accessory_bar/staging
+          dockerfile: ./Dockerfile-Staging
           tag_with_ref: true
   stage:
     runs-on: ubuntu-20.04
