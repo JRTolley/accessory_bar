@@ -1,6 +1,8 @@
 import { createClient } from "urql";
 import { createScript } from "../../graphql/mutations/createScript";
 
+const DEV = process.env.NODE_ENV !== "production";
+
 export async function installScriptTags(ctx, host) {
   const { accessToken, shop } = ctx.session;
 
@@ -14,13 +16,12 @@ export async function installScriptTags(ctx, host) {
       },
     },
   });
-
+  console.log(`Installing on ${host}`);
   // Send request
   const res = await client
     .query(createScript, {
       displayScope: "ONLINE_STORE",
-      // src: `${host}/index.min.js`,
-      src: `https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min.js?v=1603464992`,
+      src: DEV ? `${host}/index.min.js` : process.env.SHOPFRONT_SCRIPT_SRC,
     })
     .toPromise();
 

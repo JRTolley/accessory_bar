@@ -12,6 +12,7 @@ ENV SHOPIFY_API_KEY=9660ecc408a6a27343dd5357cc3b197c
 ENV SHOPIFY_API_SECRET=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
 ENV HOST=https://staging.accessorybar.jttech.dev
 ENV TYPEORM_DATABASE=staging
+ENV SHOPFRONT_SCRIPT_SRC=https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min.js?v=1603915991
 
 # Install 
 COPY package.json package.json

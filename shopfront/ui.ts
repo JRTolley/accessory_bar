@@ -21,26 +21,33 @@ function uiCreateProduct(item_json): HTMLLIElement {
   element.style.display = "flex";
   element.style.flex = "1 1 0px";
   element.style.flexDirection = "column";
+  element.style.minWidth = "150px";
+  element.style.boxSizing = "border-box";
+  element.style.cursor = "pointer";
+  element.style.margin = "0px 4px 0px 4px";
+
+  // Click to register and go to next item
+  element.onclick = () => {
+    registerClickthrough(item_json);
+  };
 
   // Picture
   const picture = document.createElement("img");
   picture.src = item_json.img;
   // Link Text
-  const link = document.createElement("a");
-  link.onclick = () => {
-    registerClickthrough(item_json);
-  };
-  // link.href = item_json.handle;
-  link.appendChild(document.createTextNode(item_json.title));
+  const title = document.createElement("h4");
+  title.style.margin = "0px 2px 1px 2px";
+  // title.style.fontWeight = "bold";
+  title.appendChild(document.createTextNode(item_json.title));
   // Price
-  const price = document.createElement("p");
-  price.appendChild(document.createTextNode(item_json.price));
+  const price = document.createElement("span");
+  price.style.margin = "0px 2px 0px 2px";
+  price.appendChild(document.createTextNode(displayPrice(item_json.price)));
 
   element.appendChild(picture);
-  element.appendChild(link);
+  element.appendChild(title);
   element.appendChild(price);
 
-  element.style.margin = "4px";
   return element;
 }
 
@@ -48,7 +55,8 @@ function uiCreateProductFlex(): HTMLUListElement {
   const element = document.createElement("ul");
   element.style.display = "flex";
   element.style.flexDirection = "row";
-  element.style.justifyContent = "space-around";
+  element.style.justifyContent = "space-between";
+  element.style.overflow = "auto";
   return element;
 }
 
@@ -78,8 +86,9 @@ function uiMain(product_json): HTMLDivElement {
 
   const textnode = document.createElement("div");
   // Title
-  const title = document.createElement("h1");
+  const title = document.createElement("h2");
   title.appendChild(document.createTextNode("Accessories for this Item"));
+  title.style.margin = "6px 2px 18px 2px";
   masterFlex.appendChild(title);
 
   // Products
@@ -90,7 +99,7 @@ function uiMain(product_json): HTMLDivElement {
   });
 
   masterFlex.appendChild(productFlex);
-  masterFlex.appendChild(uiCreateDivider());
-  masterFlex.appendChild(uiCreateDivider());
+  // masterFlex.appendChild(uiCreateDivider());
+  // masterFlex.appendChild(uiCreateDivider());
   return masterFlex;
 }
