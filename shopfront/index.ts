@@ -19,8 +19,8 @@ for (let myClass of product_class_hooks) {
 
 // Get the host
 // const host = "https://0dd9c5e4fd6c.ngrok.io";
-const host = "https://staging.accessorybar.jttech.dev";
-// const host = "https://production.accessorybar.jttech.dev";
+// const host = "https://staging.accessorybar.jttech.dev";
+const host = "https://production.accessorybar.jttech.dev";
 
 async function main() {
   const product_json = await getSettings();
