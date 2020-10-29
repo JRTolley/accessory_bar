@@ -13,6 +13,7 @@ import {
 import Axios from "axios";
 import { withUrqlClient } from "next-urql";
 import React, { useEffect, useState } from "react";
+import FeedbackWidget from "../components/FeedbackWidget";
 import { Merchant } from "../entities/Merchant";
 
 const Index: React.FC = () => {
@@ -58,6 +59,7 @@ const Index: React.FC = () => {
             }}
           />
         </Layout.AnnotatedSection>
+        <FeedbackWidget />
       </Layout>
     </Page>
   );
