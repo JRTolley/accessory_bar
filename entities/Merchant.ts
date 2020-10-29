@@ -24,6 +24,9 @@ export class Merchant extends BaseEntity {
   @Column({ unique: true })
   shopName: string;
 
+  @Column({ nullable: true })
+  accessToken: string;
+
   @Column({ nullable: true, default: "Free" })
   planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
 

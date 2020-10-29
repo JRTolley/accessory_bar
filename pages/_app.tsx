@@ -1,5 +1,5 @@
 import { Provider } from "@shopify/app-bridge-react";
-import { AppProvider } from "@shopify/polaris";
+import { AppProvider, Frame, Navigation } from "@shopify/polaris";
 // import { Component } from "react";
 import translations from "@shopify/polaris/locales/en.json";
 import Cookies from "js-cookie";
@@ -7,6 +7,8 @@ import App from "next/app";
 import "@shopify/polaris/dist/styles.css";
 import React from "react";
 import ClientRouter from "../components/ClientRouter";
+import SideBar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 class MyApp extends App {
   render() {
@@ -23,7 +25,9 @@ class MyApp extends App {
       >
         <AppProvider i18n={translations}>
           <ClientRouter />
-          <Component {...pageProps} />
+          <Frame navigation={<Sidebar />}>
+            <Component {...pageProps} />
+          </Frame>
         </AppProvider>
       </Provider>
     );

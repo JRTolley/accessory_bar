@@ -58,6 +58,7 @@ app.prepare().then(async () => {
       apiKey: SHOPIFY_API_KEY,
       secret: SHOPIFY_API_SECRET,
       scopes: [SCOPES],
+      accessMode: "offline",
       async afterAuth(ctx: Context) {
         // Set up cookies
         console.log("Creating auuth! ");
@@ -70,7 +71,7 @@ app.prepare().then(async () => {
         await installScriptTags(ctx, HOST);
         // Create billing
         // Create merchant
-        await createMerchant(shop);
+        await createMerchant(shop, accessToken);
         // Webhooks
         await registerWebhooks(ctx);
         ctx.redirect("/");
