@@ -9,8 +9,9 @@ export function create(): Router {
 
   router.post("/create", async (ctx, next) => {
     // Get Merchant
+    const { shop } = ctx.session;
     const merchant = await Merchant.findOne({
-      shopName: ctx.cookies.get("shopOrigin"),
+      shopName: shop,
     });
 
     console.log("Merchant: ", merchant);

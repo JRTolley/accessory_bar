@@ -9,6 +9,7 @@ async function createNewProducts(merchant: Merchant, products) {
     (prod) => !current_products_pids.includes(prod.pid)
   );
   console.log(`> Creating ${toCreate.length} new products`);
+  if (toCreate.length === 0) return;
   await Promise.all(
     toCreate.map(async (product) => {
       return await Product.create({
