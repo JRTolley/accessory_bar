@@ -12,7 +12,7 @@ export function reset(): Router {
   router.get("/reset", async (ctx, next) => {
     // Reset Script Tags
     await removeScriptTags(ctx);
-    await installScriptTags(ctx, HOST);
+    await installScriptTags(ctx);
     // Reset webhooks
     await removeWebhooks(ctx);
     await registerWebhooks(ctx);

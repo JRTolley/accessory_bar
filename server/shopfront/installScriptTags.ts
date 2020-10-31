@@ -2,8 +2,9 @@ import { createClient } from "urql";
 import { createScript } from "../../graphql/mutations/createScript";
 
 const DEV = process.env.NODE_ENV !== "production";
+const { HOST } = process.env;
 
-export async function installScriptTags(ctx, host) {
+export async function installScriptTags(ctx) {
   const { accessToken, shop } = ctx.session;
 
   // Create urql client
@@ -16,12 +17,12 @@ export async function installScriptTags(ctx, host) {
       },
     },
   });
-  console.log(`Installing on ${host}`);
+  console.log(`Installing on ${HOST}`);
   // Send request
   const res = await client
     .query(createScript, {
       displayScope: "ONLINE_STORE",
-      src: DEV ? `${host}/index.min.js` : process.env.SHOPFRONT_SCRIPT_SRC,
+      src: DEV ? `${HOST}/index.min.js` : process.env.SHOPFRONT_SCRIPT_SRC,
     })
     .toPromise();
 

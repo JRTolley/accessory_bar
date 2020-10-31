@@ -14,6 +14,7 @@ import Axios from "axios";
 import { withUrqlClient } from "next-urql";
 import React, { useEffect, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
+import OnOffWidget from "../components/OnOffWidget";
 import { Merchant } from "../entities/Merchant";
 
 const Index: React.FC = () => {
@@ -41,6 +42,7 @@ const Index: React.FC = () => {
     <Page>
       <TitleBar title="Overview"></TitleBar>
       <Layout>
+        <OnOffWidget />
         <Layout.AnnotatedSection title="Current Plan Type">
           <Card
             title={merchant.planType}
