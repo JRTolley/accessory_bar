@@ -5,6 +5,7 @@ import { masterAccessorySets } from "./accessorySets/masterAccessorySets";
 import { verifyRequest } from "@shopify/koa-shopify-auth";
 import { masterBilling } from "./billing/masterBilling";
 import { masterMerchant } from "./merchant/masterMerchant";
+import { masterUtil } from "./util/masterUtil";
 
 export function masterApi(): Router {
   const masterApiRouter = new Router();
@@ -23,6 +24,7 @@ export function masterApi(): Router {
     masterAccessorySets(),
     masterBilling(),
     masterMerchant(),
+    masterUtil(),
   ];
 
   apis.forEach((api) => {

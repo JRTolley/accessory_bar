@@ -25,7 +25,7 @@ const app = next({
   dev,
 });
 const handle = app.getRequestHandler();
-const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES, HOST } = process.env;
+const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES } = process.env;
 
 app.prepare().then(async () => {
   const server = new Koa();
@@ -68,7 +68,7 @@ app.prepare().then(async () => {
           secure: true,
           sameSite: "none",
         });
-        await installScriptTags(ctx, HOST);
+        await installScriptTags(ctx);
         // Create billing
         // Create merchant
         await createMerchant(shop, accessToken);
