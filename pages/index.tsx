@@ -43,7 +43,7 @@ const Index: React.FC = () => {
       <TitleBar title="Overview"></TitleBar>
       <Layout>
         <OnOffWidget />
-        <Layout.AnnotatedSection title="Current Plan Type">
+        {/* <Layout.AnnotatedSection title="Current Plan Type">
           <Card
             title={merchant.planType}
             primaryFooterAction={{
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
               onAction: resetStorefront,
             }}
           />
-        </Layout.AnnotatedSection>
+        </Layout.AnnotatedSection> */}
         <FeedbackWidget />
       </Layout>
     </Page>
