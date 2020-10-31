@@ -1,5 +1,6 @@
 import { ResourcePicker, TitleBar } from "@shopify/app-bridge-react";
 import {
+  Card,
   EmptyState,
   Frame,
   Icon,
@@ -9,6 +10,7 @@ import {
   Page,
   Stack,
   TextStyle,
+  Thumbnail,
 } from "@shopify/polaris";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -77,14 +79,23 @@ const AccessorySetPage: React.FC = () => {
       }}
     >
       <Layout>
-        {/* <Layout.Section>
-          <Link url="/accessory-sets/">
-            <Stack>
-              <Icon color="subdued" source={MobileBackArrowMajor} />
-              <TextStyle variation="subdued">Back to Sets</TextStyle>
-            </Stack>
-          </Link>
-        </Layout.Section> */}
+        <Layout.Section>
+          <Card>
+            <Card.Header title={set.baseProduct.title} />
+            <Card.Section>
+              <Stack>
+                <Thumbnail
+                  source={set.baseProduct.img}
+                  alt={"Image of " + set.baseProduct.title}
+                />
+                <Stack vertical alignment="trailing">
+                  <TextStyle variation="subdued">Impressions</TextStyle>
+                  <TextStyle variation="strong">{set.impressions}</TextStyle>
+                </Stack>
+              </Stack>
+            </Card.Section>
+          </Card>
+        </Layout.Section>
         <Layout.Section>
           {!set || set.accessories.length === 0 ? (
             emptyState

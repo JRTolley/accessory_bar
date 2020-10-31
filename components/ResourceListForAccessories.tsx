@@ -8,6 +8,7 @@ import {
 import Axios from "axios";
 import React, { useState } from "react";
 import { AccessorySet } from "../entities/AccessorySet";
+import { sortAccessories } from "../utils/frontend/sortAccessories";
 
 interface Props {
   set: AccessorySet;
@@ -46,8 +47,6 @@ const ResourceListForAccessories: React.FC<Props> = ({ set, setSet }) => {
     return (
       <ResourceItem id={id} onClick={null} media={media}>
         <TextStyle variation="strong">{title}</TextStyle>
-        <br />
-        <TextStyle variation="strong">{storeEventsCount}</TextStyle>
       </ResourceItem>
     );
   }
