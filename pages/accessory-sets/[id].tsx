@@ -71,14 +71,11 @@ const AccessorySetPage: React.FC = () => {
           url: "/accessory-sets",
         },
       ]}
+      primaryAction={{
+        content: "Add Accessories",
+        onAction: () => setPickerOpen(true),
+      }}
     >
-      <TitleBar
-        title="Add Accessories"
-        primaryAction={{
-          content: "Add accessories",
-          onAction: () => setPickerOpen(true),
-        }}
-      />
       <Layout>
         {/* <Layout.Section>
           <Link url="/accessory-sets/">
