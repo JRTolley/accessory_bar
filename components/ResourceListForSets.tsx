@@ -9,6 +9,7 @@ import {
 import Axios from "axios";
 import React, { useState } from "react";
 import { AccessorySet } from "../entities/AccessorySet";
+import { sortAccessories } from "../utils/frontend/sortAccessories";
 
 interface Props {
   sets: AccessorySet[];
@@ -45,31 +46,7 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
         ]}
         onSortChange={(selected) => {
           setSortValue(selected);
-          if (selected === "") {
-            setSets(
-              sets.sort((a, b) => {
-                if (sets.indexOf(a) > sets.indexOf(b)) return 1;
-                if (sets.indexOf(a) < sets.indexOf(b)) return -1;
-                return 0;
-              })
-            );
-          } else if (selected === "TITLE_ASC") {
-            setSets(
-              sets.sort((a, b) => {
-                if (a.baseProduct.title > b.baseProduct.title) return 1;
-                if (a.baseProduct.title < b.baseProduct.title) return -1;
-                return 0;
-              })
-            );
-          } else if (selected === "TITLE_DESC") {
-            setSets(
-              sets.sort((a, b) => {
-                if (a.baseProduct.title > b.baseProduct.title) return -1;
-                if (a.baseProduct.title < b.baseProduct.title) return 1;
-                return 0;
-              })
-            );
-          }
+          sortAccessories(selected, sets, setSets);
         }}
         selectable
       />
