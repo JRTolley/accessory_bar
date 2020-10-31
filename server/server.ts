@@ -14,9 +14,11 @@ import { Merchant } from "../entities/Merchant";
 import { Product } from "../entities/Product";
 import { StoreEvent } from "../entities/StoreEvent";
 import { masterApi } from "./api/masterAPI";
-import { createMerchant } from "./createMerchant";
 import { installScriptTags } from "./shopfront/installScriptTags";
+
 import { removeScriptTags } from "./shopfront/removeScriptTags";
+
+import { updateMerchant } from "./updateMerchant";
 import { receiveWebhooks, registerWebhooks } from "./webhooks/masterWebhook";
 import { removeWebhooks } from "./webhooks/removeWebhooks";
 dotenv.config();
@@ -74,7 +76,7 @@ app.prepare().then(async () => {
         await installScriptTags(ctx);
         // Create billing
         // Create merchant
-        await createMerchant(shop, accessToken);
+        await updateMerchant(shop, accessToken);
         // Webhooks
         await removeWebhooks(ctx);
         await registerWebhooks(ctx);

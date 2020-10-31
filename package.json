@@ -8,7 +8,8 @@
     "generate": "rm ./public/index.min.js || true && tsc --p tsconfig.minify.json ./shopfront/*.ts && mv ./shopfront/*.js ./public/ && uglifyjs --compress --mangle --output ./public/index.min.js -- ./public/*.js",
     "gen": "tsc --p tsconfig.minify.json && uglifyjs --compress --mangle --output ./public/index.min.js -- ./shopfront/*.js && rm ./shopfront/*.js",
     "build": "next build",
-    "start": "NODE_ENV=production ts-node ./server/server.ts"
+    "start": "NODE_ENV=production ts-node ./server/server.ts",
+    "updateScriptTags": "ts-node ./utils/backend/updateScriptTag.ts"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",

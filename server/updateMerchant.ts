@@ -1,6 +1,6 @@
 import { Merchant } from "../entities/Merchant";
 
-export async function createMerchant(shop: string, accessToken: string) {
+export async function updateMerchant(shop: string, accessToken: string) {
   console.log(`> ${shop} - Checking Merchant`);
   const merchant = await Merchant.findOne({ where: { shopName: shop } });
   if (!merchant) {
@@ -9,9 +9,9 @@ export async function createMerchant(shop: string, accessToken: string) {
       shopName: shop,
       accessToken,
     }).save();
-  } else if (merchant.accessToken === null) {
-    // If no accessToken make sure to grab one
-    merchant.accessToken = accessToken;
-    await merchant.save();
+    return;
   }
+  // update accessToken
+  merchant.accessToken = accessToken;
+  await merchant.save();
 }
