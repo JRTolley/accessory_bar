@@ -17,6 +17,7 @@ interface Props {
 
 const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [sortValue, setSortValue] = useState("");
 
   const promotedBulkActions = [
     {
@@ -36,6 +37,40 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
         selectedItems={selectedItems}
         onSelectionChange={setSelectedItems as any}
         promotedBulkActions={promotedBulkActions}
+        sortValue={sortValue}
+        sortOptions={[
+          { label: "---", value: "" },
+          { label: "A to Z", value: "TITLE_ASC" },
+          { label: "Z to A", value: "TITLE_DESC" },
+        ]}
+        onSortChange={(selected) => {
+          setSortValue(selected);
+          if (selected === "") {
+            setSets(
+              sets.sort((a, b) => {
+                if (sets.indexOf(a) > sets.indexOf(b)) return 1;
+                if (sets.indexOf(a) < sets.indexOf(b)) return -1;
+                return 0;
+              })
+            );
+          } else if (selected === "TITLE_ASC") {
+            setSets(
+              sets.sort((a, b) => {
+                if (a.baseProduct.title > b.baseProduct.title) return 1;
+                if (a.baseProduct.title < b.baseProduct.title) return -1;
+                return 0;
+              })
+            );
+          } else if (selected === "TITLE_DESC") {
+            setSets(
+              sets.sort((a, b) => {
+                if (a.baseProduct.title > b.baseProduct.title) return -1;
+                if (a.baseProduct.title < b.baseProduct.title) return 1;
+                return 0;
+              })
+            );
+          }
+        }}
         selectable
       />
     </Card>
@@ -50,17 +85,17 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
         <h3>
           <TextStyle variation="strong">{title}</TextStyle>
         </h3>
-        <Stack>
-          <div>
+        <Stack distribution="leading" alignment="fill" spacing="extraLoose">
+          <Stack alignment="center" spacing="tight">
             <TextStyle variation="subdued">Accessories: </TextStyle>
             <TextStyle variation="strong">{accessories.length || 0}</TextStyle>
-          </div>
-        </Stack>
-        <Stack>
-          <div>
+          </Stack>
+          {/* </Stack>
+        <Stack> */}
+          <Stack alignment="center" spacing="tight">
             <TextStyle variation="subdued">Impressions: </TextStyle>
             <TextStyle variation="strong">{impressions}</TextStyle>
-          </div>
+          </Stack>
         </Stack>
       </ResourceItem>
     );

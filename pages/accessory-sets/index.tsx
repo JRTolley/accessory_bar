@@ -46,14 +46,12 @@ const AccessorySets: React.FC = () => {
     );
 
   return (
-    <Page>
-      <TitleBar
-        title="Accessory Sets"
-        primaryAction={{
-          content: "Add Set",
-          onAction: () => setPickerOpen(true),
-        }}
-      />
+    <Page
+      primaryAction={{
+        content: "Add Sets",
+        onAction: () => setPickerOpen(true),
+      }}
+    >
       <Layout>
         <Layout.Section>
           {sets.length === 0 ? (
