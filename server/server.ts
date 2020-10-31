@@ -15,8 +15,12 @@ import { Product } from "../entities/Product";
 import { StoreEvent } from "../entities/StoreEvent";
 import { masterApi } from "./api/masterAPI";
 import { installScriptTags } from "./shopfront/installScriptTags";
+
+import { removeScriptTags } from "./shopfront/removeScriptTags";
+
 import { updateMerchant } from "./updateMerchant";
 import { receiveWebhooks, registerWebhooks } from "./webhooks/masterWebhook";
+import { removeWebhooks } from "./webhooks/removeWebhooks";
 dotenv.config();
 
 const port = parseInt(process.env.PORT!, 10) || 8081;
@@ -68,11 +72,13 @@ app.prepare().then(async () => {
           secure: true,
           sameSite: "none",
         });
+        await removeScriptTags(ctx);
         await installScriptTags(ctx);
         // Create billing
         // Create merchant
         await updateMerchant(shop, accessToken);
         // Webhooks
+        await removeWebhooks(ctx);
         await registerWebhooks(ctx);
         ctx.redirect("/");
       },
