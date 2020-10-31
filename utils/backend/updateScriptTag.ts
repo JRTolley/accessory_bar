@@ -80,7 +80,7 @@ async function main() {
 
     console.log(`> ${merchant.shopName} script tags removed`);
 
-    const fassdsa = await client
+    await client
       .mutation(createScript, {
         displayScope: "ONLINE_STORE",
         src: new_script_tag,
