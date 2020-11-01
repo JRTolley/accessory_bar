@@ -45,7 +45,7 @@ export class AccessorySet extends BaseEntity {
   })
   accessories?: Product[];
 
-  @OneToMany(() => StoreEvent, (event) => event.set)
+  @OneToMany(() => StoreEvent, (event) => event.set, { onDelete: "CASCADE" })
   storeEvents?: StoreEvent[];
 
   @Column({ default: 0 })
