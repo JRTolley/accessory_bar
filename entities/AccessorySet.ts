@@ -26,7 +26,7 @@ export class AccessorySet extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne("Product", { nullable: false, eager: true })
+  @OneToOne("Product", { nullable: false, eager: true, onDelete: "CASCADE" })
   @JoinColumn()
   baseProduct!: Product;
 

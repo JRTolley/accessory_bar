@@ -10,8 +10,8 @@ export async function updateMerchant(shop: string, accessToken: string) {
       accessToken,
     }).save();
     return;
+  } else {
+    merchant.accessToken = accessToken;
+    await merchant.save();
   }
-  // update accessToken
-  merchant.accessToken = accessToken;
-  await merchant.save();
 }
