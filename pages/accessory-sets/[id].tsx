@@ -57,7 +57,7 @@ const AccessorySetPage: React.FC = () => {
       heading="Add accessory sets to display to your customers"
       image={img}
       action={{
-        content: "Add Set",
+        content: "Add Accessories",
         onAction: () => setPickerOpen(true),
       }}
     >

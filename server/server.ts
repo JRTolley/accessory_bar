@@ -65,7 +65,7 @@ app.prepare().then(async () => {
       accessMode: "offline",
       async afterAuth(ctx: Context) {
         // Set up cookies
-        console.log("Creating auuth! ");
+        console.log(`Creating auth for ${ctx.session.shop} `);
         const { shop, accessToken } = ctx.session;
         ctx.cookies.set("shopOrigin", shop, {
           httpOnly: false,
