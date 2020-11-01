@@ -25,12 +25,14 @@ export class StoreEvent extends BaseEntity {
   updatedAt: Date;
 
   @ManyToOne(() => Product, (product) => product.storeEvents, {
+    onDelete: "CASCADE",
     cascade: true,
     eager: true,
   })
   product!: Product;
 
   @ManyToOne(() => AccessorySet, (set) => set.storeEvents, {
+    onDelete: "CASCADE",
     cascade: true,
     eager: true,
   })
