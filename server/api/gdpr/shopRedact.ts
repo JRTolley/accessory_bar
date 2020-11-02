@@ -1,10 +1,10 @@
 import Router from "koa-router";
-import { Merchant } from "../../entities/Merchant";
+import { Merchant } from "../../../entities/Merchant";
 
 export function shopRedact(): Router {
   const router = new Router();
 
-  router.post("/shop/redact", async (ctx, next) => {
+  router.post("/shopRedact", async (ctx, next) => {
     // Delete the merchant
     const body = ctx.request.body;
     console.log("Shop Redact Body: ", body);
