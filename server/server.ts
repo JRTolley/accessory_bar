@@ -93,6 +93,7 @@ app.prepare().then(async () => {
         sameSite: "none",
       });
     }
+    await next();
   });
 
   // Webhooks
