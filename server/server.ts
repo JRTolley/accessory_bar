@@ -84,6 +84,16 @@ app.prepare().then(async () => {
       },
     })
   );
+  // Set cookie if no cookie
+  server.use(async (ctx, next) => {
+    if (!ctx.cookies.get("shopOrigin")) {
+      ctx.cookies.set("shopOrigin", ctx.session.shop, {
+        httpOnly: false,
+        secure: true,
+        sameSite: "none",
+      });
+    }
+  });
 
   // Webhooks
   const webhook = receiveWebhook({
