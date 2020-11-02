@@ -6,6 +6,7 @@ import { verifyRequest } from "@shopify/koa-shopify-auth";
 import { masterBilling } from "./billing/masterBilling";
 import { masterMerchant } from "./merchant/masterMerchant";
 import { masterUtil } from "./util/masterUtil";
+import { masterGdpr } from "./gdpr/masterGdpr";
 
 export function masterApi(): Router {
   const masterApiRouter = new Router();
@@ -25,6 +26,7 @@ export function masterApi(): Router {
     masterBilling(),
     masterMerchant(),
     masterUtil(),
+    masterGdpr(),
   ];
 
   apis.forEach((api) => {
