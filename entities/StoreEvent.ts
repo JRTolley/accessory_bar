@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { AccessorySet } from "./AccessorySet";
+import { Merchant } from "./Merchant";
 import { Product } from "./Product";
 
 @Entity()
@@ -15,26 +16,30 @@ export class StoreEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  type!: "Clickthrough";
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column()
+  type!: "Clickthrough";
+
   @ManyToOne(() => Product, (product) => product.storeEvents, {
     onDelete: "CASCADE",
-    cascade: true,
     eager: true,
   })
   product!: Product;
 
   @ManyToOne(() => AccessorySet, (set) => set.storeEvents, {
     onDelete: "CASCADE",
-    cascade: true,
     eager: true,
   })
   set!: AccessorySet;
+
+  @ManyToOne(() => Merchant, (merchant) => merchant.storeEvents, {
+    onDelete: "CASCADE",
+    eager: true,
+  })
+  merchant!: Merchant;
 }

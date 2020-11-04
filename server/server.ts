@@ -49,8 +49,8 @@ app.prepare().then(async () => {
     entities: [Merchant, AccessorySet, Product, StoreEvent],
     migrations: [path.join(__root_dir, "./migration/*")],
   });
+  console.log("> ...Migrating");
   const migration_response = await conn.runMigrations();
-  console.log(path.join(__root_dir, "./migration/*"));
   console.log("Migrations: ", migration_response);
   // Serve the static script for the storefront
   server.use(

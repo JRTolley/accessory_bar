@@ -20,17 +20,15 @@ export class Product extends BaseEntity {
   id!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Column()
   pid!: string;
 
-  @ManyToMany("AccessorySet", "accessories", {
-    onDelete: "CASCADE",
-  })
+  @ManyToMany(() => AccessorySet, (set) => set.accessories)
   @JoinTable()
   sets?: AccessorySet[];
 
@@ -46,7 +44,10 @@ export class Product extends BaseEntity {
   @Column()
   handle!: string;
 
-  @ManyToOne("Merchant", "products")
+  @ManyToOne(() => Merchant, (merchant) => merchant.products, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
   merchant!: Merchant;
 
   @OneToMany(() => StoreEvent, (event) => event.product)
