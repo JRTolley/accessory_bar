@@ -8,14 +8,23 @@ export function update(): Router {
   const router = new Router();
 
   router.post("/update", async (ctx, next) => {
-    const merchant = await Merchant.findOne({
-      shopName: ctx.cookies.get("shopOrigin"),
-    });
+    if (!ctx.request.body.accessories) {
+      ctx.response.status = 400;
+      ctx.response.body = "Accessories not provided";
+    }
+    const merchant = await Merchant.findOne(
+      {
+        shopName: ctx.cookies.get("shopOrigin"),
+      },
+      {
+        relations: ["accessorySets", "accessorySets.accessories", "products"],
+      }
+    );
     const toUpdate = merchant.accessorySets.filter(
       (set) => set.id === ctx.request.body.id
     )[0];
 
-    // Create new products if neccary
+    // Create new products if neccesary
     await createNewProducts(merchant, ctx.request.body.accessories);
 
     // Make sure all inputs are unique
@@ -35,7 +44,9 @@ export function update(): Router {
     toUpdate.accessories = productsToAdd;
     await toUpdate.save();
     // Reload accessory set
-    const result = await AccessorySet.findOne(toUpdate.id);
+    const result = await AccessorySet.findOne(toUpdate.id, {
+      relations: ["accessories"],
+    });
     ctx.response.status = 200;
     ctx.response.body = result;
   });

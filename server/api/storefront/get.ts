@@ -1,4 +1,3 @@
-import { access } from "fs";
 import Router from "koa-router";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";

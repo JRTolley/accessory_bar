@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { AccessorySet } from "./AccessorySet";
 import { Product } from "./Product";
+import { StoreEvent } from "./StoreEvent";
 
 @Entity()
 export class Merchant extends BaseEntity {
@@ -16,30 +17,29 @@ export class Merchant extends BaseEntity {
   id!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Column({ unique: true })
-  shopName: string;
+  shopName!: string;
 
-  @Column({ nullable: true })
-  accessToken: string;
+  @Column({ nullable: false })
+  accessToken!: string;
 
   @Column({ default: true })
-  enabled: boolean;
+  enabled!: boolean;
 
-  @Column({ nullable: true, default: "Free" })
+  @Column({ default: "Free" })
   planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
 
-  @OneToMany("AccessorySet", "merchant", { eager: true })
+  @OneToMany(() => AccessorySet, (set) => set.merchant)
   accessorySets?: AccessorySet[];
 
-  @OneToMany("Product", "merchant", {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-    eager: true,
-  })
+  @OneToMany(() => Product, (product) => product.merchant)
   products?: Product[];
+
+  @OneToMany(() => StoreEvent, (event) => event.merchant)
+  storeEvents?: StoreEvent[];
 }

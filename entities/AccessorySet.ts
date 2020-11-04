@@ -21,27 +21,26 @@ export class AccessorySet extends BaseEntity {
   id!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
-  @OneToOne("Product", { nullable: false, eager: true, onDelete: "CASCADE" })
-  @JoinColumn()
-  baseProduct!: Product;
-
-  @Column()
-  merchantId!: number;
-
-  @ManyToOne("Merchant", "accessorySets", {
-    cascade: true,
+  @ManyToOne(() => Merchant, (merchant) => merchant.accessorySets, {
+    onDelete: "CASCADE",
   })
   merchant!: Merchant;
 
-  @ManyToMany("Product", "sets", {
+  @OneToOne(() => Product, {
+    nullable: false,
     eager: true,
-    cascade: true,
     onDelete: "CASCADE",
+  })
+  @JoinColumn()
+  baseProduct!: Product;
+
+  @ManyToMany(() => Product, (product) => product.sets, {
+    cascade: true,
   })
   accessories?: Product[];
 

@@ -10,11 +10,13 @@ export function create(): Router {
   router.post("/create", async (ctx, next) => {
     // Get Merchant
     const { shop } = ctx.session;
-    const merchant = await Merchant.findOne({
-      shopName: shop,
-    });
-
-    console.log("Merchant: ", merchant);
+    const merchant = await Merchant.findOne(
+      {
+        shopName: shop,
+      },
+      { relations: ["accessorySets", "products"] }
+    );
+    if (!merchant) throw new Error(`! Merchant not defined on ${shop}`);
     // Create new products
     await createNewProducts(merchant, ctx.request.body.accessories);
 
@@ -28,18 +30,21 @@ export function create(): Router {
 
     await Promise.all(
       toCreate.map(async (acc) => {
-        const baseProduct = await Product.findOne({ pid: acc.pid });
-        // console.log("BaseProduct: ", baseProduct);
         return await AccessorySet.create({
-          baseProduct,
+          baseProduct: await Product.findOne({ pid: acc.pid }),
           merchant: merchant,
         }).save();
       })
     );
 
-    const updatedMerchant = await Merchant.findOne({
-      shopName: ctx.cookies.get("shopOrigin"),
-    });
+    const updatedMerchant = await Merchant.findOne(
+      {
+        shopName: shop,
+      },
+      {
+        relations: ["accessorySets", "accessorySets.accessories"],
+      }
+    );
     ctx.response.status = 200;
     ctx.response.body = updatedMerchant.accessorySets;
   });
