@@ -13,6 +13,7 @@ export function get(): Router {
     });
     const results = await AccessorySet.find({
       where: { merchant },
+      relations: ["accessories"],
     });
     ctx.response.status = 200;
     ctx.response.body = results;
@@ -26,30 +27,18 @@ export function get(): Router {
       shopName: ctx.cookies.get("shopOrigin"),
     });
 
-    const set = await AccessorySet.findOne({
+    const accessorySet = await AccessorySet.findOne({
       where: { merchant, id: body.id },
       relations: ["accessories"],
     });
 
-    const result: any = set;
-    result.accessories = await Promise.all(
-      set.accessories.map(async (acc) => {
-        return {
-          ...acc,
-          storeEventsCount: await StoreEvent.count({
-            where: { product: acc, set },
-          }),
-        };
-      })
-    );
+    console.log("Set: ", accessorySet.accessories);
 
-    console.log("Set: ", result.accessories);
-
-    if (!result) {
+    if (!accessorySet) {
       ctx.response.status = 400;
     } else {
       ctx.response.status = 200;
-      ctx.response.body = result;
+      ctx.response.body = accessorySet;
     }
   });
 

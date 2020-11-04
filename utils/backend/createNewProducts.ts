@@ -2,6 +2,10 @@ import { Merchant } from "../../entities/Merchant";
 import { Product } from "../../entities/Product";
 
 async function createNewProducts(merchant: Merchant, products) {
+  if (!merchant.products) {
+    throw new Error("> createNewProducts, Products not provided on merchant");
+  }
+
   console.log("> Creating new products");
   const current_products_pids = merchant.products.map((p) => p.pid);
 
