@@ -8,6 +8,7 @@ import Router from "koa-router";
 import session from "koa-session";
 import staticServe from "koa-static";
 import next from "next";
+import path from "path";
 import { createConnection } from "typeorm";
 import { AccessorySet } from "../entities/AccessorySet";
 import { Merchant } from "../entities/Merchant";
@@ -30,22 +31,27 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY, SCOPES } = process.env;
+const __root_dir = __dirname.split("/").slice(0, -1).join("/");
 
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
   console.log(`> Starting for database ${process.env.TYPEORM_DATABASE}`);
   // Typeorm
-  await createConnection({
+  const conn = await createConnection({
     type: "postgres",
     host: process.env.TYPEORM_HOST,
     username: process.env.TYPEORM_USER,
     password: process.env.TYPEORM_PASSWORD,
     port: 5432,
     database: process.env.TYPEORM_DATABASE,
-    synchronize: true,
+    synchronize: false,
     entities: [Merchant, AccessorySet, Product, StoreEvent],
+    migrations: [path.join(__root_dir, "./migration/*")],
   });
+  const migration_response = await conn.runMigrations();
+  console.log(path.join(__root_dir, "./migration/*"));
+  console.log("Migrations: ", migration_response);
   // Serve the static script for the storefront
   server.use(
     cors({
