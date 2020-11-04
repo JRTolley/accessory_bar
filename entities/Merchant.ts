@@ -25,13 +25,13 @@ export class Merchant extends BaseEntity {
   @Column({ unique: true })
   shopName!: string;
 
-  @Column({ nullable: true })
-  accessToken?: string;
+  @Column({ nullable: false })
+  accessToken!: string;
 
   @Column({ default: true })
   enabled!: boolean;
 
-  @Column({ nullable: true, default: "Free" })
+  @Column({ default: "Free" })
   planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
 
   @OneToMany(() => AccessorySet, (set) => set.merchant)

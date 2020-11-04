@@ -32,8 +32,6 @@ export function get(): Router {
       relations: ["accessories"],
     });
 
-    console.log("Set: ", accessorySet.accessories);
-
     if (!accessorySet) {
       ctx.response.status = 400;
     } else {
