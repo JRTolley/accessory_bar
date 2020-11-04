@@ -1,6 +1,7 @@
 import { Console } from "console";
 import Router from "koa-router";
 import { AccessorySet } from "../../../entities/AccessorySet";
+import { Merchant } from "../../../entities/Merchant";
 import { Product } from "../../../entities/Product";
 import { StoreEvent } from "../../../entities/StoreEvent";
 
@@ -30,6 +31,9 @@ export function registerClickthrough(): Router {
       type: "Clickthrough",
       product,
       set,
+      merchant: await Merchant.findOne({
+        shopName: ctx.cookies.get("shopOrigin"),
+      }),
     }).save();
 
     ctx.response.status = 204;
