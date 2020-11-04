@@ -21,10 +21,13 @@ export function get() {
     }
 
     const realPid = `gid://shopify/Product/${body.product_id}`;
-    const accessorySet = await AccessorySet.findOne({
-      merchant,
-      baseProduct: await Product.findOne({ pid: realPid }),
-    });
+    const accessorySet = await AccessorySet.findOne(
+      {
+        merchant,
+        baseProduct: await Product.findOne({ pid: realPid }),
+      },
+      { relations: ["accessories"] }
+    );
 
     if (!accessorySet) {
       console.log("No accessory Set found");
