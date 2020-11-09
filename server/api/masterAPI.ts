@@ -22,7 +22,6 @@ export function masterApi(): Router {
 
   const apis = [
     masterShopfront(),
-    masterAccessorySets(),
     masterBilling(),
     masterMerchant(),
     masterUtil(),
@@ -32,6 +31,12 @@ export function masterApi(): Router {
   apis.forEach((api) => {
     masterApiRouter.use("/api", api.routes(), api.allowedMethods());
   });
+
+  masterApiRouter.use(
+    "/api/accessorySets",
+    masterAccessorySets().routes(),
+    masterAccessorySets().allowedMethods()
+  );
 
   return masterApiRouter;
 }

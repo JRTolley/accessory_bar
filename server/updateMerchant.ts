@@ -11,6 +11,7 @@ export async function updateMerchant(shop: string, accessToken: string) {
     }).save();
     return;
   } else {
+    console.log(`> ${shop} - updating accessToken`);
     merchant.accessToken = accessToken;
     await merchant.save();
   }
