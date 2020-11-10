@@ -10,11 +10,12 @@ const connection = {
     const __root_dir = __dirname.split("/").slice(0, -2).join("/");
     await createConnection({
       type: "postgres",
-      host: "localhost",
-      username: "postgres",
-      password: "1234",
+      host:
+        "ls-cf2c99af9c14c9362a9ef3c25ed8575a9f53e78c.cjynhwfinaps.us-east-2.rds.amazonaws.com",
+      username: "dbmasteruser",
+      password: "^97)lUpysjse*A}c}:lc}$,0cl&8s4g<",
       port: 5432,
-      database: "shopifytest",
+      database: "testing_db",
       synchronize: false,
       entities: [Merchant, AccessorySet, Product, StoreEvent],
       migrations: [path.join(__root_dir, "./migration/*")],

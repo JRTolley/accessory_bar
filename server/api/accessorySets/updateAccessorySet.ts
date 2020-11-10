@@ -21,7 +21,7 @@ export async function updateAccessorySet(ctx) {
     (set) => set.id === ctx.request.body.id
   )[0];
 
-  // Create new products if neccesary
+  // Create new products if necessary
   await createNewProducts(merchant, ctx.request.body.accessories);
 
   // Make sure all inputs are unique
