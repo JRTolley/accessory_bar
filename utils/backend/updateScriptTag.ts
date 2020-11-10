@@ -10,8 +10,6 @@ import { createScript } from "../../graphql/mutations/createScript";
 import { scriptTagDelete } from "../../graphql/mutations/scriptTagDelete";
 import { getScriptTags } from "../../graphql/queries/getScriptTags";
 import { hasCorrectScriptTags } from "../../server/shopfront/hasCorrectScriptTags";
-import { checkScriptTags } from "../../server/shopfront/checkScriptTags";
-import "isomorphic-fetch";
 
 const app = new Koa();
 
@@ -21,7 +19,6 @@ const host =
 const username = "dbmasteruser";
 const password = "es),<%<Oy*nPtx3K.D}F|Y%=f6=[E=Z-";
 const database = "staging";
-
 
 const new_script_tag =
   "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_c9dd5f8b-221c-40e2-9521-0a631258f709.js?v=1603916629";
@@ -98,7 +95,6 @@ async function main() {
   }
 
   console.log(":) Script Complete");
-
 }
 
 main();

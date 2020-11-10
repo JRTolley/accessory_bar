@@ -1,4 +1,3 @@
-import { Console } from "console";
 import Router from "koa-router";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
@@ -38,6 +37,5 @@ export function registerClickthrough(): Router {
 
     ctx.response.status = 204;
   });
-
   return router;
 }
