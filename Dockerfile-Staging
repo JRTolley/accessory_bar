@@ -4,7 +4,7 @@ WORKDIR /src
 
 # Enviroment
 ENV SHOP=shoppingproductsrus.myshopify.com
-ENV SCOPES=write_products,write_customers,write_draft_orders,write_script_tags,read_script_tags
+ENV SCOPES=write_script_tags,read_script_tags
 ENV TYPEORM_HOST=ls-cf2c99af9c14c9362a9ef3c25ed8575a9f53e78c.cjynhwfinaps.us-east-2.rds.amazonaws.com
 ENV TYPEORM_USER=dbmasteruser
 ENV TYPEORM_PASSWORD=^97)lUpysjse*A}c}:lc}$,0cl&8s4g<

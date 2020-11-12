@@ -14,6 +14,7 @@ beforeAll(async () => {
 }, 20000);
 
 afterAll(async () => {
+  await connection.clear();
   await connection.close();
 });
 
