@@ -10,6 +10,7 @@ import Axios from "axios";
 import React, { useState } from "react";
 import { AccessorySet } from "../entities/AccessorySet";
 import { sortAccessories } from "../utils/frontend/sortAccessories";
+import DeleteSetsModal from "./modal/deleteSetsModal";
 
 interface Props {
   sets: AccessorySet[];
@@ -18,39 +19,47 @@ interface Props {
 
 const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
   const [sortValue, setSortValue] = useState("");
 
   const promotedBulkActions = [
     {
       content: "Delete",
-      onAction: () => deleteSets(),
+      onAction: () => setModalActive(true),
     },
   ];
 
   console.log("Sets: ", sets);
 
   return (
-    <Card>
-      <ResourceList
-        resourceName={{ singular: "Accessory Set", plural: "Accessory Sets" }}
-        items={sets}
-        renderItem={renderItem}
-        selectedItems={selectedItems}
-        onSelectionChange={setSelectedItems as any}
-        promotedBulkActions={promotedBulkActions}
-        sortValue={sortValue}
-        sortOptions={[
-          { label: "---", value: "" },
-          { label: "A to Z", value: "TITLE_ASC" },
-          { label: "Z to A", value: "TITLE_DESC" },
-        ]}
-        onSortChange={(selected) => {
-          setSortValue(selected);
-          sortAccessories(selected, sets, setSets);
-        }}
-        selectable
+    <div>
+      <Card>
+        <ResourceList
+          resourceName={{ singular: "Accessory Set", plural: "Accessory Sets" }}
+          items={sets}
+          renderItem={renderItem}
+          selectedItems={selectedItems}
+          onSelectionChange={setSelectedItems as any}
+          promotedBulkActions={promotedBulkActions}
+          sortValue={sortValue}
+          sortOptions={[
+            { label: "---", value: "" },
+            { label: "A to Z", value: "TITLE_ASC" },
+            { label: "Z to A", value: "TITLE_DESC" },
+          ]}
+          onSortChange={(selected) => {
+            setSortValue(selected);
+            sortAccessories(selected, sets, setSets);
+          }}
+          selectable
+        />
+      </Card>
+      <DeleteSetsModal
+        active={modalActive}
+        setActive={setModalActive}
+        deleteSets={deleteSets}
       />
-    </Card>
+    </div>
   );
 
   function renderItem(item) {
@@ -79,6 +88,7 @@ const ResourceListForSets: React.FC<Props> = ({ sets, setSets }) => {
   }
 
   async function deleteSets() {
+    setModalActive(false);
     console.log("Delete Sets: ", selectedItems);
     await Axios.post(`api/accessorySets/delete`, { ids: selectedItems }).then(
       (res) => {
