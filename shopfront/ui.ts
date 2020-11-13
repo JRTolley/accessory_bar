@@ -18,7 +18,7 @@ function uiCreateProduct(item_json): HTMLLIElement {
   element.style.flex = "1 1 0px";
   element.style.flexDirection = "column";
   element.style.minWidth = "150px";
-  element.style.maxHeight = "300px";
+  // element.style.maxHeight = "300px";
   element.style.boxSizing = "border-box";
   element.style.cursor = "pointer";
   element.style.margin = "0px 4px 0px 4px";
