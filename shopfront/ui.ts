@@ -1,9 +1,5 @@
 async function registerClickthrough(item) {
-  const script = document.getElementById("ProductJson-product-template");
-  const script_content = script.firstChild.textContent;
-  const script_json = JSON.parse(script_content);
-
-  const body = { product_id: script_json.id };
+  const body = { product_id: getProductId() };
 
   await fetch(`${host}/api/storefront/registerClickthrough`, {
     method: "POST",
@@ -22,6 +18,7 @@ function uiCreateProduct(item_json): HTMLLIElement {
   element.style.flex = "1 1 0px";
   element.style.flexDirection = "column";
   element.style.minWidth = "150px";
+  element.style.maxHeight = "300px";
   element.style.boxSizing = "border-box";
   element.style.cursor = "pointer";
   element.style.margin = "0px 4px 0px 4px";
@@ -33,6 +30,9 @@ function uiCreateProduct(item_json): HTMLLIElement {
 
   // Picture
   const picture = document.createElement("img");
+  picture.style.display = "block";
+  picture.style.width = "100%";
+  picture.style.height = "auto";
   picture.src = item_json.img;
   // Link Text
   const title = document.createElement("h4");
@@ -83,6 +83,9 @@ function uiMain(product_json): HTMLDivElement {
   // Create master flexbox
   const masterFlex = uiMasterFlex();
   masterFlex.appendChild(uiCreateDivider());
+  masterFlex.style.gridColumnStart = "1";
+  masterFlex.style.gridColumnEnd = "-1";
+  masterFlex.style.minWidth = "90%";
 
   const textnode = document.createElement("div");
   // Title

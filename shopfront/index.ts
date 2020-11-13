@@ -1,12 +1,23 @@
 // @ts-ignore
 // Grab the product container and append
 let product = undefined;
-const product_id_hooks = ["ProductSection", "productHead", "shopify-section"];
-const product_class_hooks = [
-  "product-single",
-  "section.product_section",
-  "product-single__content",
+const product_id_hooks = [
+  "ProductSection",
+  "productHead",
+  "ProductSection-product-template",
 ];
+const product_class_hooks = [
+  "product--template",
+  "product__content",
+  "product",
+  // "product-single__content",
+];
+const fallback_hooks = [
+  "shopify-section-product-template",
+  "shopify-section-product",
+];
+
+let fallbackUsed = false;
 for (let id of product_id_hooks) {
   if (product) break;
   if (document.getElementById(id)) product = document.getElementById(id);
@@ -16,9 +27,16 @@ for (let myClass of product_class_hooks) {
   if (document.getElementsByClassName(myClass))
     product = document.getElementsByClassName(myClass)[0];
 }
+for (let id of fallback_hooks) {
+  if (product) break;
+  if (document.getElementById(id)) {
+    product = document.getElementById(id);
+    fallbackUsed = true;
+  }
+}
 
 // Get the host
-const host = "https://abacdcbf53a3.ngrok.io";
+const host = "https://05b5eecf6395.ngrok.io";
 // const host = "https://staging.accessorybar.jttech.dev";
 // const host = "https://production.accessorybar.jttech.dev";
 

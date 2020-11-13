@@ -540,8 +540,15 @@ function displayPrice(price: string) {
     },
   };
 
-  let moneytype = document
-    .querySelector("meta[property='og:price:currency']")
-    .getAttribute("content");
+  let metaprop = document.querySelector("meta[property='og:price:currency']");
+  if (!metaprop) {
+    metaprop = document.querySelector(
+      "meta[property='product:price:currency']"
+    );
+  }
+
+  const moneytype = metaprop.getAttribute("content");
+  console.log("MoneyType: ", moneytype);
+
   return currencies[moneytype].moneyFormat;
 }
