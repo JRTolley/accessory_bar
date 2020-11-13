@@ -18,18 +18,15 @@ export async function hasCorrectScriptTags(shop, accessToken, correctTag) {
   // Script tags
   const res = await client.query(getScriptTags).toPromise();
 
-  if (!res.data) {
-    console.log("!! Something has gone wrong: ", res);
-    console.log("!! ", res.error);
-    throw new Error("Checking did not work");
+  if (res.data) {
+    if (res.data.scriptTags.edges.length !== 1) {
+      return false;
+    }
+    if (res.data.scriptTags.edges[0].node.src !== correctTag) {
+      console.log("Hit");
+      return false;
+    }
+    return true;
   }
-
-  if (res.data.scriptTags.edges.length !== 1) {
-    return false;
-  }
-  if (res.data.scriptTags.edges[0].node.src !== correctTag) {
-    console.log("Hit");
-    return false;
-  }
-  return true;
+  return undefined;
 }

@@ -19,10 +19,10 @@ const host =
   "ls-cf2c99af9c14c9362a9ef3c25ed8575a9f53e78c.cjynhwfinaps.us-east-2.rds.amazonaws.com";
 const username = "dbmasteruser";
 const password = "^97)lUpysjse*A}c}:lc}$,0cl&8s4g<";
-const database = "staging_db";
+const database = "production_db";
 
 const new_script_tag =
-  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_dadabef5-b27b-454c-8548-aac23ffd54d9.js?v=1605264505";
+  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min.js?v=1605265217";
 
 async function main() {
   console.log(` Starting for database ${database}`);
@@ -45,13 +45,13 @@ async function main() {
   // Find all the Merchants with old tags
   let filtered_merchants = [];
   for (let merchant of merchants) {
-    if (
-      !(await hasCorrectScriptTags(
-        merchant.shopName,
-        merchant.accessToken,
-        new_script_tag
-      ))
-    ) {
+    const res = await hasCorrectScriptTags(
+      merchant.shopName,
+      merchant.accessToken,
+      new_script_tag
+    );
+
+    if (!res && res !== undefined) {
       filtered_merchants.push(merchant);
     }
   }

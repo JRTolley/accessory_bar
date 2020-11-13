@@ -37,8 +37,8 @@ for (let id of fallback_hooks) {
 
 // Get the host
 // const host = "https://05b5eecf6395.ngrok.io";
-const host = "https://staging.accessorybar.jttech.dev";
-// const host = "https://production.accessorybar.jttech.dev";
+// const host = "https://staging.accessorybar.jttech.dev";
+const host = "https://production.accessorybar.jttech.dev";
 
 async function main() {
   const product_json = await getSettings();
