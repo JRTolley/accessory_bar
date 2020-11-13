@@ -1,5 +1,6 @@
 import "isomorphic-fetch";
 import Koa from "koa";
+import { resolve } from "path";
 import { createConnection } from "typeorm";
 import { createClient } from "urql";
 import { AccessorySet } from "../../entities/AccessorySet";
@@ -15,18 +16,18 @@ const app = new Koa();
 
 // Staging
 const host =
-  "ls-65f3464dc451ce359854f23226ce6946f9021c0d.cjynhwfinaps.us-east-2.rds.amazonaws.com";
+  "ls-cf2c99af9c14c9362a9ef3c25ed8575a9f53e78c.cjynhwfinaps.us-east-2.rds.amazonaws.com";
 const username = "dbmasteruser";
-const password = "es),<%<Oy*nPtx3K.D}F|Y%=f6=[E=Z-";
-const database = "staging";
+const password = "^97)lUpysjse*A}c}:lc}$,0cl&8s4g<";
+const database = "staging_db";
 
 const new_script_tag =
-  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_c9dd5f8b-221c-40e2-9521-0a631258f709.js?v=1603916629";
+  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_dadabef5-b27b-454c-8548-aac23ffd54d9.js?v=1605264505";
 
 async function main() {
   console.log(` Starting for database ${database}`);
 
-  await createConnection({
+  const conn = await createConnection({
     type: "postgres",
     host,
     username,
@@ -42,10 +43,19 @@ async function main() {
   console.log(`> ${merchants.length} Merchants found`);
 
   // Find all the Merchants with old tags
-  merchants = merchants.filter(
-    async (m) =>
-      await !hasCorrectScriptTags(m.shopName, m.accessToken, new_script_tag)
-  );
+  let filtered_merchants = [];
+  for (let merchant of merchants) {
+    if (
+      !(await hasCorrectScriptTags(
+        merchant.shopName,
+        merchant.accessToken,
+        new_script_tag
+      ))
+    ) {
+      filtered_merchants.push(merchant);
+    }
+  }
+  merchants = filtered_merchants;
   console.log(
     `> ${merchants.length} Merchants with incorrect scripttags found`
   );
@@ -95,6 +105,8 @@ async function main() {
   }
 
   console.log(":) Script Complete");
+  conn.close();
+  return;
 }
 
 main();

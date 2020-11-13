@@ -57,6 +57,7 @@ function uiCreateProductFlex(): HTMLUListElement {
   element.style.flexDirection = "row";
   element.style.justifyContent = "space-between";
   element.style.overflow = "auto";
+  element.style.padding = "0px 0px 0px 0px";
   return element;
 }
 
