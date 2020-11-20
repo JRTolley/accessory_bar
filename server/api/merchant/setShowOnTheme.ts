@@ -6,13 +6,13 @@ import { removeScriptTags } from "../../shopfront/removeScriptTags";
 
 const { HOST } = process.env;
 
-export function setEnabled(): Router {
+export function setShowOnTheme(): Router {
   const router = new Router();
 
-  router.post("/setEnabled", async (ctx, next) => {
+  router.post("/setShowOnTheme", async (ctx, next) => {
     const { shop } = ctx.session;
     const merchant = await Merchant.findOne({ shopName: shop });
-    merchant.enabled = ctx.request.body.enabled;
+    merchant.showOnThemeEditor = ctx.request.body.showOnThemeEditor;
     await merchant.save();
 
     const already_installed = await hasCorrectScriptTags(
@@ -22,7 +22,7 @@ export function setEnabled(): Router {
     );
 
     if (
-      merchant.enabled &&
+      merchant.showOnThemeEditor &&
       already_installed !== undefined &&
       !already_installed
     ) {
@@ -31,8 +31,7 @@ export function setEnabled(): Router {
       removeScriptTags(ctx);
     }
 
-    ctx.response.status = 200;
-    ctx.response.body = merchant;
+    ctx.response.status = 204;
   });
 
   return router;

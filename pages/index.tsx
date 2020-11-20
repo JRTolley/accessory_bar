@@ -15,6 +15,7 @@ import { withUrqlClient } from "next-urql";
 import React, { useEffect, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
 import OnOffWidget from "../components/OnOffWidget";
+import ThemeEditorWidget from "../components/ThemeEditorWidget";
 import { Merchant } from "../entities/Merchant";
 
 const Index: React.FC = () => {
@@ -43,24 +44,7 @@ const Index: React.FC = () => {
       <TitleBar title="Overview"></TitleBar>
       <Layout>
         <OnOffWidget />
-        {/* <Layout.AnnotatedSection title="Current Plan Type">
-          <Card
-            title={merchant.planType}
-            primaryFooterAction={{
-              content: "Upgrade",
-              url: "/billing",
-            }}
-          />
-        </Layout.AnnotatedSection>
-        <Layout.AnnotatedSection title="Reset webhooks and Script Tags">
-          <Card
-            title="Wooo"
-            primaryFooterAction={{
-              content: "Reset",
-              onAction: resetStorefront,
-            }}
-          />
-        </Layout.AnnotatedSection> */}
+        <ThemeEditorWidget />
         <FeedbackWidget />
       </Layout>
     </Page>

@@ -28,8 +28,6 @@ export async function removeScriptTags(ctx) {
     })
   );
 
-  console.log("Promise data: ", data);
-
   if (!res.error) {
     console.log(`> ${shop} - Script Tags successfully removed`);
   } else {

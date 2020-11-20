@@ -11,6 +11,10 @@ export function get() {
       ctx.response.status = 400;
       ctx.response.body = "No element product id found";
     }
+    if (!body.usingThemeEditor) {
+      ctx.response.status = 400;
+      ctx.response.body = "No Theme Editor Variable found";
+    }
 
     const merchant = await Merchant.findOne({
       shopName: ctx.cookies.get("shopOrigin"),
@@ -19,7 +23,16 @@ export function get() {
     if (!merchant) {
       console.error("> Merchant wasn't defined");
     }
-
+    // If using theme editor make sure we are showing on theme editor
+    // If using storefront, make sure we're enabled
+    if (
+      (body.usingThemeEditor && !merchant.showOnThemeEditor) ||
+      (!body.usingThemeEditor && !merchant.enabled)
+    ) {
+      ctx.response.status = 204;
+      return;
+    }
+    // Retrieve product
     const realPid = `gid://shopify/Product/${body.product_id}`;
     const accessorySet = await AccessorySet.findOne(
       {
@@ -37,7 +50,6 @@ export function get() {
       ctx.response.body = accessorySet.accessories;
       accessorySet.incrementImpressions();
     }
-
     next();
   });
 
