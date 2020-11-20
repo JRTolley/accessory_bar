@@ -28,8 +28,11 @@ export class Merchant extends BaseEntity {
   @Column({ nullable: false })
   accessToken!: string;
 
-  @Column({ default: true })
+  @Column({ default: false })
   enabled!: boolean;
+
+  @Column({ default: false })
+  showOnThemeEditor!: boolean;
 
   @Column({ default: "Free" })
   planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
