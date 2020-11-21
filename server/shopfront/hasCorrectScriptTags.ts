@@ -10,7 +10,7 @@ export async function hasCorrectScriptTags(
   let correctTag = prod
     ? process.env.SHOPFRONT_SCRIPT_SRC
     : process.env.HOST + "/index.min.js";
-  if (!override_src) {
+  if (override_src) {
     correctTag = override_src;
   }
 
