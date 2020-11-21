@@ -1,7 +1,12 @@
 import { createClient, fetchExchange } from "urql";
 import { getScriptTags } from "../../graphql/queries/getScriptTags";
 
-export async function hasCorrectScriptTags(shop, accessToken, correctTag) {
+export async function hasCorrectScriptTags(shop, accessToken) {
+  const prod = process.env.NODE_ENV === "production";
+  const correctTag = prod
+    ? process.env.SHOPFRONT_SCRIPT_SRC
+    : process.env.HOST + "/index.min.js";
+
   const client = createClient({
     url: `https://${shop}/admin/api/2020-07/graphql.json`,
     fetchOptions: {

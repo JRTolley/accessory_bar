@@ -17,8 +17,7 @@ export function setEnabled(): Router {
 
     const already_installed = await hasCorrectScriptTags(
       merchant.shopName,
-      merchant.accessToken,
-      `${HOST}/index.min.js`
+      merchant.accessToken
     );
 
     if (
