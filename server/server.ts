@@ -79,7 +79,7 @@ app.prepare().then(async () => {
           sameSite: "none",
         });
         await removeScriptTags(ctx);
-        await installScriptTags(ctx);
+        // await installScriptTags(ctx); //No install by default - could remove
         // Create billing
         // Create merchant
         await updateMerchant(shop, accessToken);
