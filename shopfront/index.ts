@@ -10,8 +10,9 @@ const product_class_hooks = [
   "product--template",
   "product__content",
   "product",
-  // "product-single__content",
+  "product__align-center",
 ];
+const data_hooks = ["product-page"];
 const fallback_hooks = [
   "shopify-section-product-template",
   "shopify-section-product",
@@ -27,6 +28,11 @@ for (let myClass of product_class_hooks) {
   if (document.getElementsByClassName(myClass))
     product = document.getElementsByClassName(myClass)[0];
 }
+for (let hook of data_hooks) {
+  if (product) break;
+  if (document.querySelector(`div[data-hook='${hook}']`))
+    product = document.querySelector(`div[data-hook='${hook}']`);
+}
 for (let id of fallback_hooks) {
   if (product) break;
   if (document.getElementById(id)) {
@@ -36,9 +42,9 @@ for (let id of fallback_hooks) {
 }
 
 // Get the host
-const host = "https://18ad4b283c71.ngrok.io";
+// const host = "https://1c5ba6c632e6.ngrok.io";
 // const host = "https://staging.accessorybar.jttech.dev";
-// const host = "https://production.accessorybar.jttech.dev";
+const host = "https://production.accessorybar.jttech.dev";
 
 async function main() {
   const product_json = await getSettings();
