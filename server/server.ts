@@ -79,10 +79,15 @@ app.prepare().then(async () => {
           sameSite: "none",
         });
         await removeScriptTags(ctx);
-        // await installScriptTags(ctx); //No install by default - could remove
+
         // Create billing
         // Create merchant
         await updateMerchant(shop, accessToken);
+        // check for scripttags
+        let merchant = await Merchant.findOne({ shopName: shop });
+        if (merchant.showOnThemeEditor || merchant.enabled) {
+          await installScriptTags(ctx);
+        }
         // Webhooks
         await removeWebhooks(ctx);
         await registerWebhooks(ctx);
