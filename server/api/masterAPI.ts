@@ -7,6 +7,7 @@ import { masterBilling } from "./billing/masterBilling";
 import { masterMerchant } from "./merchant/masterMerchant";
 import { masterUtil } from "./util/masterUtil";
 import { masterGdpr } from "./gdpr/masterGdpr";
+import { masterCustomization } from "./customization/masterCustomization";
 
 export function masterApi(): Router {
   const masterApiRouter = new Router();
@@ -26,6 +27,7 @@ export function masterApi(): Router {
     masterMerchant(),
     masterUtil(),
     masterGdpr(),
+    masterCustomization(),
   ];
 
   apis.forEach((api) => {
@@ -36,6 +38,12 @@ export function masterApi(): Router {
     "/api/accessorySets",
     masterAccessorySets().routes(),
     masterAccessorySets().allowedMethods()
+  );
+
+  masterApiRouter.use(
+    "/api/customization",
+    masterCustomization().routes(),
+    masterCustomization().allowedMethods()
   );
 
   return masterApiRouter;

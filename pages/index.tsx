@@ -1,22 +1,11 @@
 import { TitleBar } from "@shopify/app-bridge-react";
-import {
-  Button,
-  Card,
-  DisplayText,
-  Frame,
-  Heading,
-  Layout,
-  Loading,
-  Page,
-  Stack,
-} from "@shopify/polaris";
+import { Frame, Layout, Loading, Page } from "@shopify/polaris";
 import Axios from "axios";
 import { withUrqlClient } from "next-urql";
 import React, { useEffect, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
 import OnOffWidget from "../components/OnOffWidget";
 import ThemeEditorWidget from "../components/ThemeEditorWidget";
-import { Merchant } from "../entities/Merchant";
 
 const Index: React.FC = () => {
   const [merchant, setMerchant] = useState(null);

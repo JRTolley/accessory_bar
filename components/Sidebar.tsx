@@ -1,5 +1,5 @@
 import { Navigation } from "@shopify/polaris";
-import { HomeMajor, ProductsMajor } from "@shopify/polaris-icons";
+import { ColorsMajor, HomeMajor, ProductsMajor } from "@shopify/polaris-icons";
 import { useRouter } from "next/router";
 
 const Sidebar: React.FC = () => {
@@ -18,6 +18,11 @@ const Sidebar: React.FC = () => {
             url: "/accessory-sets",
             label: "Accessory Sets",
             icon: ProductsMajor,
+          },
+          {
+            url: "/customization",
+            label: "Customization",
+            icon: ColorsMajor,
           },
         ]}
       />
