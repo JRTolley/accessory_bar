@@ -21,7 +21,7 @@ export class CustomizationOptions extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToOne(() => Merchant)
+  @OneToOne(() => Merchant, { onDelete: "CASCADE" })
   @JoinColumn()
   merchant!: Merchant;
 

@@ -8,6 +8,7 @@ export async function updateAccessorySet(ctx) {
   if (!ctx.request.body.accessories) {
     ctx.response.status = 400;
     ctx.response.body = "Accessories not provided";
+    return ctx;
   }
   const merchant = await Merchant.findOne(
     {

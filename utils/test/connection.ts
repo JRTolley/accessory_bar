@@ -1,6 +1,7 @@
 import path from "path";
 import { createConnection, getConnection } from "typeorm";
 import { AccessorySet } from "../../entities/AccessorySet";
+import { CustomizationOptions } from "../../entities/CustomizationOptions";
 import { Merchant } from "../../entities/Merchant";
 import { Product } from "../../entities/Product";
 import { StoreEvent } from "../../entities/StoreEvent";
@@ -17,7 +18,13 @@ const connection = {
       port: 5432,
       database: "testing_db",
       synchronize: false,
-      entities: [Merchant, AccessorySet, Product, StoreEvent],
+      entities: [
+        Merchant,
+        AccessorySet,
+        Product,
+        StoreEvent,
+        CustomizationOptions,
+      ],
       migrations: [path.join(__root_dir, "./migration/*")],
     });
     console.log("Root: ", __root_dir);

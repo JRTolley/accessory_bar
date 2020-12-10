@@ -19,12 +19,34 @@ import React, { useEffect, useState } from "react";
 
 const Customization: React.FC = () => {
   const [customizationProfile, setCustomizationProfile] = useState(null);
-  const [rangeValue, setRangeValue] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const [title, setTitle] = useState(null);
+  const [titleFont, setTitleFont] = useState(null);
+  const [titleFontSize, setTitleFontSize] = useState(null);
+  const [barPaddingX, setBarPaddingX] = useState(null);
+  const [barPaddingY, setBarPaddingY] = useState(null);
+  const [itemMaxXSize, setItemMaxXSize] = useState(null);
+  const [itemFont, setItemFont] = useState(null);
+  const [itemFontSize, setItemFontSize] = useState(null);
+  const [itemPaddingX, setItemPaddingX] = useState(null);
+
+  const [rangeValue, setRangeValue] = useState(0);
 
   useEffect(() => {
     Axios.get(`api/customization/get`).then((res) => {
       setCustomizationProfile(res.data);
+      if (res.data) {
+        setTitle(res.data.title);
+        setTitleFont(res.data.titleFont);
+        setTitleFontSize(res.data.titleFontSize);
+        setBarPaddingX(res.data.barPaddingX);
+        setBarPaddingY(res.data.barPaddingY);
+        setItemMaxXSize(res.data.itemMaxXSize);
+        setItemFont(res.data.itemFont);
+        setItemFontSize(res.data.itemFontSize);
+        setItemPaddingX(res.data.itemPaddingX);
+      }
       console.log("Customization: ", res.data);
       setLoading(false);
     });
@@ -64,52 +86,108 @@ const Customization: React.FC = () => {
           <TextStyle variation="strong">Set customization options</TextStyle>
           <FormLayout>
             <TextStyle variation="strong">Title</TextStyle>
-            <TextField type="text" label="Title" onChange={() => {}} />
-            <TextField type="text" label="Font" onChange={() => {}} />
-            <TextField type="number" label="Font size" onChange={() => {}} />
+            <TextField
+              type="text"
+              label="Title"
+              value={title}
+              onChange={(i) => {
+                i === "" ? setTitle(null) : setTitle(i);
+              }}
+            />
+            <TextField
+              type="text"
+              label="Font"
+              value={titleFont}
+              onChange={(i) => {
+                i === "" ? setTitleFont(null) : setTitleFont(i);
+              }}
+            />
+            <TextField
+              type="number"
+              label="Font size"
+              value={titleFontSize}
+              onChange={(i) => {
+                i === "" ? setTitleFontSize(null) : setTitleFontSize(i);
+              }}
+            />
 
             <TextStyle variation="strong">Accessory Bar</TextStyle>
             <FormLayout.Group>
               <RangeSlider
                 label="Horizontal Padding"
-                value={0}
-                onChange={() => {}}
+                value={barPaddingX}
+                onChange={(i) => {
+                  setBarPaddingX(i);
+                }}
                 output
               />
-              <Button>Reset</Button>
+              <Button onClick={() => setBarPaddingX(null)}>Reset</Button>
             </FormLayout.Group>
 
             <FormLayout.Group>
               <RangeSlider
                 label="Vertical Padding"
-                value={0}
-                onChange={() => {}}
+                value={barPaddingY}
+                onChange={(i) => {
+                  setBarPaddingY(i);
+                }}
                 output
               />
-              <Button>Reset</Button>
+              <Button onClick={() => setBarPaddingY(null)}>Reset</Button>
             </FormLayout.Group>
 
             <TextStyle variation="strong">Accessory Item</TextStyle>
-            <TextField type="text" label="Font" onChange={() => {}} />
-            <TextField type="number" label="Font Size" onChange={() => {}} />
+            <TextField
+              type="text"
+              label="Font"
+              value={itemFont}
+              onChange={(i) => {
+                i === "" ? setItemFont(null) : setItemFont(i);
+              }}
+            />
+            <TextField
+              type="number"
+              label="Font Size"
+              value={itemFontSize}
+              onChange={(i) => {
+                setItemFontSize(i);
+              }}
+            />
             <FormLayout.Group>
               <RangeSlider
                 label="Max Size in pem"
-                value={rangeValue}
-                onChange={() => {}}
+                value={itemMaxXSize}
+                onChange={(i) => {
+                  setItemMaxXSize(i);
+                }}
                 output
               />
-              <Button>Reset</Button>
+              <Button
+                onClick={() => {
+                  setItemMaxXSize(null);
+                }}
+              >
+                Reset
+              </Button>
             </FormLayout.Group>
             <FormLayout.Group>
               <RangeSlider
                 label="Padding between items in pem"
-                value={0}
-                onChange={() => {}}
+                value={itemPaddingX}
+                onChange={(i) => {
+                  setItemPaddingX(i);
+                }}
                 output
               />
-              <Button>Reset</Button>
+              <Button
+                onClick={() => {
+                  setItemPaddingX;
+                }}
+              >
+                Reset
+              </Button>
             </FormLayout.Group>
+            <Button submit>Update</Button>
           </FormLayout>
         </Form>
       </Card>
@@ -123,7 +201,22 @@ const Customization: React.FC = () => {
     setLoading(false);
   }
 
-  async function handleSubmit() {}
+  async function handleSubmit() {
+    console.log("Updated");
+    let update = {
+      title,
+      titleFont,
+      titleFontSize,
+      barPaddingX,
+      barPaddingY,
+      itemFont,
+      itemMaxXSize,
+    };
+    console.log(update);
+    setLoading(true);
+    const res = await Axios.post(`/api/customization/update`, update);
+    setLoading(false);
+  }
 };
 
 export default Customization;

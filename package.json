@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "dev": "NODE_ENV=development ts-node ./server/server.ts",
     "generate": "rm ./public/index.min.js || true && tsc --p tsconfig.minify.json ./shopfront/*.ts && mv ./shopfront/*.js ./public/ && uglifyjs --compress --mangle --output ./public/index.min.js -- ./public/*.js",
     "gen": "tsc --p tsconfig.minify.json && uglifyjs --compress --mangle --output ./public/index.min.js -- ./shopfront/*.js && rm ./shopfront/*.js",
