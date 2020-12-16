@@ -42,16 +42,20 @@ for (let id of fallback_hooks) {
 }
 
 // Get the host
-const host = "https://5e6c8ee72345.ngrok.io";
+const host = "https://ae8b502684e9.ngrok.io";
 // const host = "https://staging.accessorybar.jttech.dev";
 // const host = "https://production.accessorybar.jttech.dev";
 
 async function main() {
-  const product_json = await getSettings();
+  const [product_json, customization_options] = await Promise.all([
+    getSettings(),
+    getCustomization(),
+  ]);
+
   if (product_json !== null) {
     // If a product set has actually been configured
     // @ts-ignore
-    product.appendChild(uiMain(product_json));
+    product.appendChild(uiMain(product_json, customization_options));
   }
 }
 
