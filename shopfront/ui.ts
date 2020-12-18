@@ -14,6 +14,7 @@ async function registerClickthrough(item) {
 
 function uiCreateProduct(item_json, customization): HTMLLIElement {
   const element = document.createElement("li");
+  element.className = "AdderProduct";
   element.style.display = "flex";
   element.style.flex = "1 1 0px";
   element.style.flexDirection = "column";
@@ -37,12 +38,14 @@ function uiCreateProduct(item_json, customization): HTMLLIElement {
 
   // Picture
   const picture = document.createElement("img");
+  picture.className = "AdderProductImage";
   picture.style.display = "block";
   picture.style.width = "100%";
   picture.style.height = "auto";
   picture.src = item_json.img;
   // Link Text
   const title = document.createElement("h4");
+  title.className = "AdderProductTitle";
   title.style.margin = "0px 2px 1px 2px";
   // title.style.fontWeight = "bold";
   title.appendChild(document.createTextNode(item_json.title));
@@ -54,6 +57,7 @@ function uiCreateProduct(item_json, customization): HTMLLIElement {
   }
   // Price
   const price = document.createElement("span");
+  price.className = "AdderProductPrice";
   price.style.margin = "0px 2px 0px 2px";
   price.appendChild(document.createTextNode(displayPrice(item_json.price)));
 
@@ -66,6 +70,7 @@ function uiCreateProduct(item_json, customization): HTMLLIElement {
 
 function uiCreateProductFlex(): HTMLUListElement {
   const element = document.createElement("ul");
+  element.id = "AdderProductFlex";
   element.style.display = "flex";
   element.style.flexDirection = "row";
   element.style.justifyContent = "space-between";
@@ -103,6 +108,7 @@ function uiMain(product_json, customization): HTMLDivElement {
   // Create master flexbox
   const masterFlex = uiMasterFlex();
   masterFlex.appendChild(uiCreateDivider());
+  masterFlex.id = "AdderMaster";
   masterFlex.style.gridColumnStart = "1";
   masterFlex.style.gridColumnEnd = "-1";
   masterFlex.style.minWidth = "90%";
@@ -116,6 +122,8 @@ function uiMain(product_json, customization): HTMLDivElement {
 
   // Title
   const title = document.createElement("h2");
+  title.id = "AdderTitle";
+  title.appendChild(document.createTextNode("Accessories for this Item"));
   title.style.margin = "6px 2px 18px 2px";
   title.appendChild(
     document.createTextNode(
