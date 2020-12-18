@@ -11,6 +11,7 @@ import next from "next";
 import path from "path";
 import { createConnection } from "typeorm";
 import { AccessorySet } from "../entities/AccessorySet";
+import { CustomizationOptions } from "../entities/CustomizationOptions";
 import { Merchant } from "../entities/Merchant";
 import { Product } from "../entities/Product";
 import { StoreEvent } from "../entities/StoreEvent";
@@ -46,7 +47,13 @@ app.prepare().then(async () => {
     port: 5432,
     database: process.env.TYPEORM_DATABASE,
     synchronize: false,
-    entities: [Merchant, AccessorySet, Product, StoreEvent],
+    entities: [
+      Merchant,
+      AccessorySet,
+      Product,
+      StoreEvent,
+      CustomizationOptions,
+    ],
     migrations: [path.join(__root_dir, "./migration/*")],
   });
   console.log("> ...Migrating");

@@ -22,7 +22,7 @@ export class Merchant extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: false })
   shopName!: string;
 
   @Column({ nullable: false })

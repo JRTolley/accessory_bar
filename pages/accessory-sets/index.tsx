@@ -52,6 +52,7 @@ const AccessorySets: React.FC = () => {
         onAction: () => setPickerOpen(true),
       }}
     >
+      <TitleBar title="Accessory Sets"></TitleBar>
       <Layout>
         <Layout.Section>
           {sets.length === 0 ? (

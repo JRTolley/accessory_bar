@@ -12,7 +12,7 @@ async function registerClickthrough(item) {
   window.location = item.handle;
 }
 
-function uiCreateProduct(item_json): HTMLLIElement {
+function uiCreateProduct(item_json, customization): HTMLLIElement {
   const element = document.createElement("li");
   element.className = "AdderProduct";
   element.style.display = "flex";
@@ -23,6 +23,13 @@ function uiCreateProduct(item_json): HTMLLIElement {
   element.style.boxSizing = "border-box";
   element.style.cursor = "pointer";
   element.style.margin = "0px 4px 0px 4px";
+  if (customization.itemMaxXSize) {
+    element.style.maxWidth = `${customization.itemMaxXSize}em`;
+  }
+
+  if (customization.itemPaddingX) {
+    element.style.padding = `0px ${customization.itemPaddingX}px 0px ${customization.itemPaddingX}px`;
+  }
 
   // Click to register and go to next item
   element.onclick = () => {
@@ -42,6 +49,12 @@ function uiCreateProduct(item_json): HTMLLIElement {
   title.style.margin = "0px 2px 1px 2px";
   // title.style.fontWeight = "bold";
   title.appendChild(document.createTextNode(item_json.title));
+  if (doesFontExist(customization.itemFont)) {
+    title.style.fontFamily = customization.itemFont;
+  }
+  if (customization.itemFontSize) {
+    title.style.fontSize = customization.itemFontSize + "pt";
+  }
   // Price
   const price = document.createElement("span");
   price.className = "AdderProductPrice";
@@ -83,8 +96,14 @@ function uiMasterFlex(): HTMLDivElement {
   return main;
 }
 
-function uiMain(product_json): HTMLDivElement {
+function uiMain(product_json, customization): HTMLDivElement {
   console.log("UI Main init");
+
+  // Do cuostmization options
+  console.log("Customization Options: ", customization);
+  /* BarPaddingX, BarPaddingY, ItemFont, ItemFontSize, ItemMaxXSize,
+    Title, TitleFont, TitleFontSize
+  */
 
   // Create master flexbox
   const masterFlex = uiMasterFlex();
@@ -93,18 +112,38 @@ function uiMain(product_json): HTMLDivElement {
   masterFlex.style.gridColumnStart = "1";
   masterFlex.style.gridColumnEnd = "-1";
   masterFlex.style.minWidth = "90%";
+  if (customization.barPaddingX) {
+    masterFlex.style.paddingLeft = customization.barPaddingX + "%";
+    masterFlex.style.paddingRight = customization.barPaddingX + "%";
+  }
+  if (customization.barPaddingY) {
+    masterFlex.style.paddingTop = customization.barPaddingY + "pt";
+  }
 
   // Title
   const title = document.createElement("h2");
   title.id = "AdderTitle";
   title.appendChild(document.createTextNode("Accessories for this Item"));
   title.style.margin = "6px 2px 18px 2px";
+  title.appendChild(
+    document.createTextNode(
+      customization.title ? customization.title : "Accessories for this Item"
+    )
+  );
+  if (doesFontExist(customization.titleFont)) {
+    console.log("Setting custom font");
+    title.style.fontFamily = customization.titleFont;
+  }
+  if (customization.titleFontSize) {
+    console.log("Setting custom title size");
+    title.style.fontSize = `${customization.titleFontSize}pt`;
+  }
   masterFlex.appendChild(title);
 
   // Products
   const productFlex = uiCreateProductFlex();
   product_json.forEach((element) => {
-    let productDisplay = uiCreateProduct(element);
+    let productDisplay = uiCreateProduct(element, customization);
     productFlex.appendChild(productDisplay);
   });
 

@@ -32,3 +32,15 @@ async function getSettings() {
   console.log("Settings Json: ", res_json);
   return res_json;
 }
+
+async function getCustomization() {
+  // console.log("Getting customization");
+
+  const res = await fetch(`${host}/api/customization/get`, {
+    method: "GET",
+    credentials: "include",
+  });
+  const data = await res.json();
+
+  return data;
+}
