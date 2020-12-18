@@ -105,7 +105,7 @@ const Customization: React.FC = () => {
             <TextField
               type="number"
               label="Font size"
-              value={titleFontSize}
+              value={titleFontSize ? titleFontSize.toString() : ""}
               onChange={(i) => {
                 i === "" ? setTitleFontSize(null) : setTitleFontSize(i);
               }}
@@ -115,6 +115,7 @@ const Customization: React.FC = () => {
             <FormLayout.Group>
               <RangeSlider
                 label="Horizontal Padding"
+                max={25}
                 value={barPaddingX}
                 onChange={(i) => {
                   setBarPaddingX(i);
@@ -148,15 +149,17 @@ const Customization: React.FC = () => {
             <TextField
               type="number"
               label="Font Size"
-              value={itemFontSize}
+              value={itemFontSize ? itemFontSize.toString() : ""}
               onChange={(i) => {
-                setItemFontSize(i);
+                i === "" ? setItemFontSize(null) : setItemFontSize(+i);
               }}
             />
             <FormLayout.Group>
               <RangeSlider
                 label="Max Size in pem"
                 value={itemMaxXSize}
+                min={5}
+                max={20}
                 onChange={(i) => {
                   setItemMaxXSize(i);
                 }}
@@ -174,6 +177,7 @@ const Customization: React.FC = () => {
               <RangeSlider
                 label="Padding between items in pem"
                 value={itemPaddingX}
+                max={50}
                 onChange={(i) => {
                   setItemPaddingX(i);
                 }}
@@ -181,7 +185,7 @@ const Customization: React.FC = () => {
               />
               <Button
                 onClick={() => {
-                  setItemPaddingX;
+                  setItemPaddingX(null);
                 }}
               >
                 Reset
@@ -210,7 +214,9 @@ const Customization: React.FC = () => {
       barPaddingX,
       barPaddingY,
       itemFont,
+      itemFontSize,
       itemMaxXSize,
+      itemPaddingX,
     };
     console.log(update);
     setLoading(true);

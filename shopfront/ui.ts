@@ -22,6 +22,13 @@ function uiCreateProduct(item_json, customization): HTMLLIElement {
   element.style.boxSizing = "border-box";
   element.style.cursor = "pointer";
   element.style.margin = "0px 4px 0px 4px";
+  if (customization.itemMaxXSize) {
+    element.style.maxWidth = `${customization.itemMaxXSize}em`;
+  }
+
+  if (customization.itemPaddingX) {
+    element.style.padding = `0px ${customization.itemPaddingX}px 0px ${customization.itemPaddingX}px`;
+  }
 
   // Click to register and go to next item
   element.onclick = () => {
@@ -39,6 +46,12 @@ function uiCreateProduct(item_json, customization): HTMLLIElement {
   title.style.margin = "0px 2px 1px 2px";
   // title.style.fontWeight = "bold";
   title.appendChild(document.createTextNode(item_json.title));
+  if (doesFontExist(customization.itemFont)) {
+    title.style.fontFamily = customization.itemFont;
+  }
+  if (customization.itemFontSize) {
+    title.style.fontSize = customization.itemFontSize + "pt";
+  }
   // Price
   const price = document.createElement("span");
   price.style.margin = "0px 2px 0px 2px";
