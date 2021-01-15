@@ -1,8 +1,6 @@
-import { registerWebhook } from "@shopify/koa-shopify-webhooks";
-import {
-  ApiVersion,
-  DeliveryMethod,
-} from "@shopify/koa-shopify-webhooks/dist/src/register";
+import { ApiVersion } from "@shopify/koa-shopify-graphql-proxy";
+import { DeliveryMethod, registerWebhook } from "@shopify/koa-shopify-webhooks";
+
 import Router from "koa-router";
 import { Merchant } from "../../entities/Merchant";
 import { extractPlan } from "../../utils/backend/extractPlan";
