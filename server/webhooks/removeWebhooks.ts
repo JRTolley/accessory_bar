@@ -1,4 +1,3 @@
-import { access } from "fs";
 import { createClient } from "urql";
 import { webhookSubscriptionDelete } from "../../graphql/mutations/webhookSubscriptionDelete";
 import { getWebhooks } from "../../graphql/queries/getWebhooks";

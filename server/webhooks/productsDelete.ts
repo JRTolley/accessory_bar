@@ -2,7 +2,7 @@ import { registerWebhook } from "@shopify/koa-shopify-webhooks";
 import {
   ApiVersion,
   DeliveryMethod,
-} from "@shopify/koa-shopify-webhooks/dist/src/register";
+} from "@shopify/koa-shopify-webhooks/build/ts/register";
 import Router from "koa-router";
 import { Product } from "../../entities/Product";
 
