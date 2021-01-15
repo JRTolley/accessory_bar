@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import FeedbackWidget from "../components/FeedbackWidget";
 import OnOffWidget from "../components/OnOffWidget";
 import ThemeEditorWidget from "../components/ThemeEditorWidget";
+import TutorialCard from "../components/TutorialCard";
 
 const Index: React.FC = () => {
   const [merchant, setMerchant] = useState(null);
@@ -35,6 +36,7 @@ const Index: React.FC = () => {
         <OnOffWidget />
         <ThemeEditorWidget />
         <FeedbackWidget />
+        <TutorialCard />
       </Layout>
     </Page>
   );
