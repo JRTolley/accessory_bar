@@ -47,7 +47,7 @@ describe("API - Accessory Sets", () => {
       ctx = await createAccessorySet(ctx);
       expect(ctx).not.toBeNull();
       expect(await Product.count()).toEqual(1);
-    });
+    }, 20000);
   });
   describe("Delete", () => {
     test("Delete Accessory Set", async () => {
