@@ -19,10 +19,10 @@ const host =
   "ls-cf2c99af9c14c9362a9ef3c25ed8575a9f53e78c.cjynhwfinaps.us-east-2.rds.amazonaws.com";
 const username = "dbmasteruser";
 const password = "^97)lUpysjse*A}c}:lc}$,0cl&8s4g<";
-const database = "staging_db";
+const database = "production_db";
 
 const new_script_tag =
-  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_f2ff159c-8e9f-42c6-bd44-e701c242d05a.js?v=1611513711";
+  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_eb7b095f-9c24-4ebf-b65c-3eb8232f0676.js?v=1611515333";
 
 async function main() {
   console.log(` Starting for database ${database}`);

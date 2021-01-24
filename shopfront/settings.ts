@@ -40,6 +40,20 @@ async function getCustomization() {
     method: "GET",
     credentials: "include",
   });
+
+  if (res.status === 204) {
+    return {
+      itemMaxXSize: undefined,
+      itemPaddingX: undefined,
+      itemFont: undefined,
+      itemFontSize: undefined,
+      barPaddingX: undefined,
+      barPaddingY: undefined,
+      title: undefined,
+      titleFont: undefined,
+      titleFontSize: undefined,
+    };
+  }
   const data = await res.json();
 
   return data;
