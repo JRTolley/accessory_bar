@@ -6,7 +6,7 @@ const ReleaseNotes: React.FC = () => {
   return (
     <Page>
       <TitleBar title="Release Notes"></TitleBar>
-      <Card title="December Update" sectioned>
+      <Card title="January Update" sectioned>
         <List>
           <List.Item>Added Release Notes Section</List.Item>
           <List.Item>Added Introduction Tutorial Video</List.Item>
