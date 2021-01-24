@@ -123,7 +123,6 @@ function uiMain(product_json, customization): HTMLDivElement {
   // Title
   const title = document.createElement("h2");
   title.id = "AdderTitle";
-  title.appendChild(document.createTextNode("Accessories for this Item"));
   title.style.margin = "6px 2px 18px 2px";
   title.appendChild(
     document.createTextNode(

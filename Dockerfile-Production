@@ -12,7 +12,7 @@ ENV SHOPIFY_API_KEY=38b443ca48b137615d92fa5b6db4633f
 ENV SHOPIFY_API_SECRET=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
 ENV HOST=https://production.accessorybar.jttech.dev
 ENV TYPEORM_DATABASE=production_db
-ENV SHOPFRONT_SCRIPT_SRC=https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_5bf40a65-75cb-44b1-9077-a0c8c116663d.js?v=1608155366
+ENV SHOPFRONT_SCRIPT_SRC=https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_47e0e22b-3463-4129-90ee-7f9a77da60ed.js?v=1611514034
 
 # Install 
 COPY package.json package.json
