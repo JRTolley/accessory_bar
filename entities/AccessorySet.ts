@@ -50,6 +50,9 @@ export class AccessorySet extends BaseEntity {
   @Column({ default: 0 })
   impressions!: number;
 
+  @Column({ default: "custom", nullable: false })
+  type: "custom" | "automatic";
+
   async incrementImpressions() {
     this.impressions++;
     await this.save();

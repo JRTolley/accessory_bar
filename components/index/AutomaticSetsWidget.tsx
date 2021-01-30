@@ -1,11 +1,18 @@
 import { Card, Layout, SettingToggle } from "@shopify/polaris";
 import Axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AutomaticSetsWidget: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
 
   const contentStatus = enabled ? "Disable" : "Enable";
+
+  useEffect(() => {
+    Axios.get(`api/merchant/get`).then((res) => {
+      setEnabled(res.data.automaticSets);
+    });
+  }, []);
+
   return (
     <Layout.AnnotatedSection
       title="Automatic Accessories"
