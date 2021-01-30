@@ -4,8 +4,6 @@ import { hasCorrectScriptTags } from "../../shopfront/hasCorrectScriptTags";
 import { installScriptTags } from "../../shopfront/installScriptTags";
 import { removeScriptTags } from "../../shopfront/removeScriptTags";
 
-const { HOST } = process.env;
-
 export function setEnabled(): Router {
   const router = new Router();
 

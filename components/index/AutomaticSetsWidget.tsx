@@ -1,4 +1,5 @@
 import { Card, Layout, SettingToggle } from "@shopify/polaris";
+import Axios from "axios";
 import React, { useState } from "react";
 
 const AutomaticSetsWidget: React.FC = () => {
@@ -22,6 +23,7 @@ const AutomaticSetsWidget: React.FC = () => {
   );
 
   async function handleToggle() {
+    await Axios.post("/api/automaticSets/setEnabled", { enabled: !enabled });
     setEnabled(!enabled);
   }
 };
