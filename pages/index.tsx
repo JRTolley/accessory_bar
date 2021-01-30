@@ -3,10 +3,11 @@ import { Frame, Layout, Loading, Page } from "@shopify/polaris";
 import Axios from "axios";
 import { withUrqlClient } from "next-urql";
 import React, { useEffect, useState } from "react";
-import FeedbackWidget from "../components/FeedbackWidget";
-import OnOffWidget from "../components/OnOffWidget";
-import ThemeEditorWidget from "../components/ThemeEditorWidget";
-import TutorialCard from "../components/TutorialCard";
+import AutomaticSetsWidget from "../components/index/AutomaticSetsWidget";
+import FeedbackWidget from "../components/index/FeedbackWidget";
+import OnOffWidget from "../components/index/OnOffWidget";
+import ThemeEditorWidget from "../components/index/ThemeEditorWidget";
+import TutorialCard from "../components/index/TutorialCard";
 
 const Index: React.FC = () => {
   const [merchant, setMerchant] = useState(null);
@@ -36,6 +37,7 @@ const Index: React.FC = () => {
         <OnOffWidget />
         <ThemeEditorWidget />
         <FeedbackWidget />
+        <AutomaticSetsWidget />
         <TutorialCard />
       </Layout>
     </Page>
