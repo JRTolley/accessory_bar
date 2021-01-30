@@ -22,6 +22,9 @@ export class Merchant extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
+  @Column({ default: "Free" })
+  planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
+
   @Column({ unique: true, nullable: false })
   shopName!: string;
 
@@ -34,8 +37,8 @@ export class Merchant extends BaseEntity {
   @Column({ default: false })
   showOnThemeEditor!: boolean;
 
-  @Column({ default: "Free" })
-  planType?: "None" | "Free" | "Beta" | "Full" | "Pro";
+  @Column({ default: false })
+  automaticSets!: boolean;
 
   @OneToMany(() => AccessorySet, (set) => set.merchant)
   accessorySets?: AccessorySet[];
