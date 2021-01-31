@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
           },
           {
             url: "/accessory-sets",
-            label: "Accessory Sets",
+            label: "Custom Accessories",
             icon: ProductsMajor,
           },
           {

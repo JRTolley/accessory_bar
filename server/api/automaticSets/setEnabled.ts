@@ -1,7 +1,10 @@
 import Router from "koa-router";
+import { createClient } from "urql";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
 import { Product } from "../../../entities/Product";
+import { getAllProducts } from "../../../graphql/queries/getAllProducts";
+import createNewProducts from "../../../utils/backend/createNewProducts";
 
 async function createRandomSet(keyProduct, products, merchant) {
   // If the product already exists don't do anything
@@ -29,33 +32,63 @@ export function setEnabled(): Router {
 
   router.post("/setEnabled", async (ctx, next) => {
     const { shop } = ctx.session;
-    const merchant = await Merchant.findOne({ shopName: shop });
+    const merchant = await Merchant.findOne(
+      { shopName: shop },
+      { relations: ["products"] }
+    );
     merchant.automaticSets = ctx.request.body.enabled;
     await merchant.save();
 
     console.log("Enabled: ", merchant.automaticSets);
 
-    // TODO - Create the Automatic Responses
     // If disabled delete accessory sets
     if (!merchant.automaticSets) {
       await AccessorySet.delete({ type: "automatic", merchant });
-      console.log(
-        "Deleted, Sets remaining: ",
-        await AccessorySet.find({ merchant })
-      );
     }
     // If enabled create accessory sets
     else if (merchant.automaticSets) {
       // Get all products
       // TODO gotta get all the remaining accessories aswell.
-      const products = await Product.find({ where: { merchant } });
+      const client = createClient({
+        url: `https://${shop}/admin/api/2020-07/graphql.json`,
+        fetchOptions: {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": merchant.accessToken,
+          },
+        },
+      });
+
+      const res = await client.query(getAllProducts).toPromise();
+      if (!res.error) {
+        console.log(`> ${shop} - All products successfully retrieved`);
+      } else {
+        console.error(`! ${shop} - All products trivial failed`);
+      }
+
+      let products = res.data.products.edges;
+      products = products
+        .map((p) => p["node"])
+        .map((acc) => {
+          return {
+            pid: acc.id,
+            title: acc.title,
+            handle: acc.handle,
+            price: acc.variants.edges[0].node.price,
+            img: acc.images.edges[0].node.originalSrc,
+          };
+        });
+      await createNewProducts(merchant, products);
+      // console.log("Amount of products: ", products);
+
+      products = await Product.find({ where: { merchant } });
       console.log("Product: ", products.length);
       await Promise.all(
         products.map(async (product) => {
           return await createRandomSet(product, products, merchant);
         })
       );
-      console.log(await AccessorySet.find());
+      console.log("Number:", await AccessorySet.findAndCount());
     }
 
     ctx.response.status = 200;

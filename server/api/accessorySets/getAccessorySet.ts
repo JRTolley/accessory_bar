@@ -7,7 +7,7 @@ export async function getAllAccessorySets(ctx) {
     shopName: ctx.cookies.get("shopOrigin"),
   });
   const results = await AccessorySet.find({
-    where: { merchant },
+    where: { merchant, type: "custom" },
     relations: ["accessories"],
   });
   ctx.response.status = 200;

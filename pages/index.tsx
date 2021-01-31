@@ -36,8 +36,8 @@ const Index: React.FC = () => {
       <Layout>
         <OnOffWidget />
         <ThemeEditorWidget />
-        <FeedbackWidget />
         <AutomaticSetsWidget />
+        <FeedbackWidget />
         <TutorialCard />
       </Layout>
     </Page>
