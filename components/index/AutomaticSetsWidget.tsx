@@ -16,7 +16,7 @@ const AutomaticSetsWidget: React.FC = () => {
   return (
     <Layout.AnnotatedSection
       title="Automatic Accessories"
-      description="Automatically serve accessories for all products"
+      description="Show accessories for all products"
     >
       <Card>
         <SettingToggle

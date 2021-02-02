@@ -11,12 +11,22 @@ export async function deleteAccessorySet(ctx) {
     }
   );
 
-  const toDelete = merchant.accessorySets.filter((set) =>
+  // If automatic just redo an automatic accessory set
+
+  const toUpdate = merchant.accessorySets.filter((set) =>
     ctx.request.body.ids.includes(set.id)
   );
 
-  await AccessorySet.remove(toDelete);
-
+  if (merchant.automaticSets) {
+    await Promise.all(
+      toUpdate.map(async (a) => {
+        a.type = "automatic";
+        await a.save();
+      })
+    );
+  } else {
+    await AccessorySet.remove(toUpdate);
+  }
   const updatedMerchant = await Merchant.findOne(
     {
       shopName: ctx.cookies.get("shopOrigin"),
@@ -26,7 +36,9 @@ export async function deleteAccessorySet(ctx) {
     }
   );
   ctx.response.status = 200;
-  ctx.response.body = updatedMerchant.accessorySets;
+  ctx.response.body = updatedMerchant.accessorySets.filter(
+    (a) => a.type == "custom"
+  );
 
   return ctx;
 }
