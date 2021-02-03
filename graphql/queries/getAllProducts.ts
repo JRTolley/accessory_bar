@@ -8,6 +8,7 @@ export const getAllProducts = gql`
           id
           title
           handle
+          status
           images(first: 1) {
             edges {
               node {

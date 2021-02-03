@@ -3,7 +3,9 @@ import { createClient } from "urql";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
 import { Product } from "../../../entities/Product";
+import { bulkGetAllProducts } from "../../../graphql/mutations/bulkGetAllProducts";
 import { getAllProducts } from "../../../graphql/queries/getAllProducts";
+import { getCurrentBulkOperation } from "../../../graphql/queries/getCurrentBulkOperation";
 import createNewProducts from "../../../utils/backend/createNewProducts";
 
 async function createRandomSet(keyProduct, products, merchant) {
@@ -50,7 +52,7 @@ export function setEnabled(): Router {
       // Get all products
       // TODO gotta get all the remaining accessories aswell.
       const client = createClient({
-        url: `https://${shop}/admin/api/2020-07/graphql.json`,
+        url: `https://${shop}/admin/api/2021-01/graphql.json`,
         fetchOptions: {
           headers: {
             "Content-Type": "application/json",
@@ -59,13 +61,18 @@ export function setEnabled(): Router {
         },
       });
 
-      const res = await client.query(getAllProducts).toPromise();
+      //const res = await client.query(getAllProducts).toPromise();
+      // Send off bulk request
+      const res = await client.mutation(bulkGetAllProducts).toPromise();
+
       if (!res.error) {
         console.log(`> ${shop} - All products successfully retrieved`);
       } else {
         console.error(`! ${shop} - All products trivial failed`);
       }
+      console.log("Bulk stuff: ", res.data);
 
+      /*
       let products = res.data.products.edges;
       products = products
         .map((p) => p["node"])
@@ -89,6 +96,7 @@ export function setEnabled(): Router {
         })
       );
       console.log("Number:", await AccessorySet.findAndCount());
+      */
     }
 
     ctx.response.status = 200;

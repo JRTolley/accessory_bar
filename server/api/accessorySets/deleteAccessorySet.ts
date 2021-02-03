@@ -7,7 +7,7 @@ export async function deleteAccessorySet(ctx) {
       shopName: ctx.cookies.get("shopOrigin"),
     },
     {
-      relations: ["accessorySets"],
+      relations: ["accessorySets", "products"],
     }
   );
 
@@ -18,9 +18,14 @@ export async function deleteAccessorySet(ctx) {
   );
 
   if (merchant.automaticSets) {
+    // Create new automatic set
     await Promise.all(
       toUpdate.map(async (a) => {
         a.type = "automatic";
+        a.accessories = merchant.products
+          .filter((p) => p !== a.baseProduct)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, Math.min(5, merchant.products.length - 1));
         await a.save();
       })
     );

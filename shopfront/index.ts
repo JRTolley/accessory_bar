@@ -42,7 +42,7 @@ for (let id of fallback_hooks) {
 }
 
 // Get the host
-const host = "https://ca077b5af461.ngrok.io";
+const host = "https://819d3eec86c1.ngrok.io";
 // const host = "https://staging.accessorybar.jttech.dev";
 // const host = "https://production.accessorybar.jttech.dev";
 
