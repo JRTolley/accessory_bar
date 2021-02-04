@@ -40,7 +40,6 @@ export function setEnabled(): Router {
         },
       });
 
-      //const res = await client.query(getAllProducts).toPromise();
       // Send off bulk request
       const res = await client.mutation(bulkGetAllProducts).toPromise();
 
@@ -50,32 +49,6 @@ export function setEnabled(): Router {
         console.error(`! ${shop} - All products trivial failed`);
       }
       console.log("Bulk stuff: ", res.data);
-
-      /*
-      let products = res.data.products.edges;
-      products = products
-        .map((p) => p["node"])
-        .map((acc) => {
-          return {
-            pid: acc.id,
-            title: acc.title,
-            handle: acc.handle,
-            price: acc.variants.edges[0].node.price,
-            img: acc.images.edges[0].node.originalSrc,
-          };
-        });
-      await createNewProducts(merchant, products);
-      // console.log("Amount of products: ", products);
-
-      products = await Product.find({ where: { merchant } });
-      console.log("Product: ", products.length);
-      await Promise.all(
-        products.map(async (product) => {
-          return await createRandomSet(product, products, merchant);
-        })
-      );
-      console.log("Number:", await AccessorySet.findAndCount());
-      */
     }
 
     ctx.response.status = 200;
