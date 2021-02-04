@@ -22,3 +22,6 @@ config/tunnel.pid
 
 # ignore build files
 public/index.min.js
+
+# ignore data
+data

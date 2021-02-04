@@ -8,27 +8,6 @@ import { getAllProducts } from "../../../graphql/queries/getAllProducts";
 import { getCurrentBulkOperation } from "../../../graphql/queries/getCurrentBulkOperation";
 import createNewProducts from "../../../utils/backend/createNewProducts";
 
-async function createRandomSet(keyProduct, products, merchant) {
-  // If the product already exists don't do anything
-  if (await AccessorySet.findOne({ where: { baseProduct: keyProduct } })) {
-    console.log("Woop");
-    return;
-  }
-  // products.filter(p !== keyProduct)
-  const accessories = products
-    .filter((p) => p !== keyProduct)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, Math.min(5, products.length - 1));
-  console.log("Start: ", accessories);
-  await AccessorySet.create({
-    baseProduct: keyProduct,
-    merchant,
-    type: "automatic",
-    accessories,
-  }).save();
-  console.log("Woop");
-}
-
 export function setEnabled(): Router {
   const router = new Router();
 

@@ -48,8 +48,11 @@ const AutomaticSetsWidget: React.FC = () => {
       await new Promise((resolve) => setTimeout(resolve, 5000));
       await pollStatus();
       return;
+    } else if (res.data === "COMPLETED") {
+      console.log("COMPLETED");
+      setPolling(false);
+      return;
     }
-    setPolling(false);
   }
 };
 
