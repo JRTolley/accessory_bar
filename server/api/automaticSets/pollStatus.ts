@@ -116,7 +116,7 @@ export function pollStatus(): Router {
       );
       console.log("Number:", await AccessorySet.findAndCount());
       // Delete file
-      // fs.unlinkSync(filename);
+      fs.unlinkSync(filename);
     }
 
     ctx.response.status = 200;

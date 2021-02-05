@@ -9,8 +9,14 @@ const AutomaticSetsWidget: React.FC = () => {
   const contentStatus = enabled ? (polling ? "Polling" : "Disable") : "Enable";
 
   useEffect(() => {
-    Axios.get(`api/merchant/get`).then((res) => {
+    Axios.get(`/api/merchant/get`).then((res) => {
       setEnabled(res.data.automaticSets);
+    });
+    Axios.get(`/api/automaticSets/pollStatus`).then(async (res) => {
+      if (["CREATED", "RUNNING"].includes(res.data)) {
+        setPolling(true);
+        await pollStatus();
+      }
     });
   }, []);
 
@@ -34,9 +40,9 @@ const AutomaticSetsWidget: React.FC = () => {
   async function handleToggle() {
     await Axios.post("/api/automaticSets/setEnabled", { enabled: !enabled });
     setEnabled(!enabled);
+    setPolling(true);
     if (!enabled) {
       await new Promise((resolve) => setTimeout(resolve, 5000));
-      setPolling(true);
       await pollStatus();
     }
   }

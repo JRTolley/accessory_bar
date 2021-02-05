@@ -5,7 +5,7 @@ export const bulkGetAllProducts = gql`
     bulkOperationRunQuery(
       query: """
       {
-          products {
+          products(query: "published_status:ACTIVE") {
               edges {
                   node {
                       id
