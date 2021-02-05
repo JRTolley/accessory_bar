@@ -1,13 +1,13 @@
-import Router from "koa-router";
-import { createClient } from "urql";
-import { Merchant } from "../../../entities/Merchant";
-import { getCurrentBulkOperation } from "../../../graphql/queries/getCurrentBulkOperation";
+import fs from "fs";
 import https from "https";
-import fs, { write } from "fs";
-import path, { dirname } from "path";
-import createNewProducts from "../../../utils/backend/createNewProducts";
+import Router from "koa-router";
+import path from "path";
+import { createClient } from "urql";
 import { AccessorySet } from "../../../entities/AccessorySet";
+import { Merchant } from "../../../entities/Merchant";
 import { Product } from "../../../entities/Product";
+import { getCurrentBulkOperation } from "../../../graphql/queries/getCurrentBulkOperation";
+import createNewProducts from "../../../utils/backend/createNewProducts";
 
 const __root_dir = __dirname.split("/").slice(0, -3).join("/");
 

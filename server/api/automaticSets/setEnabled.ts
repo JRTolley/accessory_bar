@@ -2,11 +2,7 @@ import Router from "koa-router";
 import { createClient } from "urql";
 import { AccessorySet } from "../../../entities/AccessorySet";
 import { Merchant } from "../../../entities/Merchant";
-import { Product } from "../../../entities/Product";
 import { bulkGetAllProducts } from "../../../graphql/mutations/bulkGetAllProducts";
-import { getAllProducts } from "../../../graphql/queries/getAllProducts";
-import { getCurrentBulkOperation } from "../../../graphql/queries/getCurrentBulkOperation";
-import createNewProducts from "../../../utils/backend/createNewProducts";
 
 export function setEnabled(): Router {
   const router = new Router();
