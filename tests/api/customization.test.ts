@@ -43,6 +43,9 @@ describe("API - Customization Profile", () => {
         merchant,
       }).save();
       let ctx = makeDefaultContext();
+      ctx.cookies.get = (name) => {
+        return "cust.myshopify.com";
+      };
       ctx.session = { shop: "cust.myshopify.com" };
       ctx = await getCustomization(ctx);
       expect(ctx.response.body).not.toBeNull();
@@ -61,6 +64,9 @@ describe("API - Customization Profile", () => {
       }).save();
 
       let ctx = makeDefaultContext();
+      ctx.cookies.get = (name) => {
+        return "cust.myshopify.com";
+      };
       ctx.session = { shop: "cust.myshopify.com" };
       ctx.request.body = {
         title: "Related Items",
