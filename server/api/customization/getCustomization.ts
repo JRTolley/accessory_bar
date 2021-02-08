@@ -2,11 +2,11 @@ import { CustomizationOptions } from "../../../entities/CustomizationOptions";
 import { Merchant } from "../../../entities/Merchant";
 
 export async function getCustomization(ctx) {
-  const shop = ctx.cookies.get("shopOrigin");
+  // const shop = ctx.cookies.get("shopOrigin");
   const merchant = await Merchant.findOne({
-    shopName: shop,
+    shopName: ctx.cookies.get("shopOrigin"),
   });
-  if (!merchant) throw new Error(`! Merchant not defined on ${shop}`);
+  if (!merchant) throw new Error(`! Merchant not defined on getCustomization`);
   const customizationOptions = await CustomizationOptions.findOne({
     where: {
       merchant,
