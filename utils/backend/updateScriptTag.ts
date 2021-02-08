@@ -22,7 +22,7 @@ const password = "^97)lUpysjse*A}c}:lc}$,0cl&8s4g<";
 const database = "production_db";
 
 const new_script_tag =
-  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_eb7b095f-9c24-4ebf-b65c-3eb8232f0676.js?v=1611515333";
+  "https://cdn.shopify.com/s/files/1/0425/8273/7063/files/index.min_e7f45778-893b-430b-b040-606331d5b23d.js?v=1612780769";
 
 async function main() {
   console.log(` Starting for database ${database}`);

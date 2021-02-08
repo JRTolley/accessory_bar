@@ -2,7 +2,7 @@ import { CustomizationOptions } from "../../../entities/CustomizationOptions";
 import { Merchant } from "../../../entities/Merchant";
 
 export async function getCustomization(ctx) {
-  const { shop } = ctx.session;
+  const shop = ctx.cookies.get("shopOrigin");
   const merchant = await Merchant.findOne({
     shopName: shop,
   });

@@ -17,6 +17,7 @@ async function getSettings() {
   console.log("Using Theme: ", usingThemeEditor);
   // find the product template script with all the info we need
   const body = { product_id: getProductId(), usingThemeEditor };
+  console.log("Settings Body: ", body);
   // Retrieve the Accessories to display
   const res = await fetch(`${host}/api/storefront/get`, {
     method: "POST",
