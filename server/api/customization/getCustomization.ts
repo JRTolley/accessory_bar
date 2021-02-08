@@ -12,7 +12,7 @@ export async function getCustomization(ctx) {
       merchant,
     },
   });
-  if (getCustomization) {
+  if (customizationOptions) {
     ctx.response.status = 200;
     ctx.response.body = customizationOptions;
   } else {
