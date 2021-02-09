@@ -6,6 +6,7 @@ export async function getAllAccessorySets(ctx) {
   const merchant = await Merchant.findOne({
     shopName: ctx.cookies.get("shopOrigin"),
   });
+  console.log("Shop Origin: ", ctx.session.shop);
   const results = await AccessorySet.find({
     where: { merchant },
     relations: ["accessories"],

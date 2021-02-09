@@ -6,6 +6,7 @@ import { Product } from "../../../entities/Product";
 export function get() {
   const router = new Router();
   router.post("/get", async (ctx, next) => {
+    console.log("Request: ", ctx);
     let body = JSON.parse(ctx.request.body);
     if (!body.product_id) {
       ctx.response.status = 400;

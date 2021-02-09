@@ -67,7 +67,7 @@ app.prepare().then(async () => {
   );
   server.use(staticServe("./public"));
   // Session
-  server.use(session({ sameSite: "none", secure: true }, server));
+  server.use(session({ sameSite: null, secure: true }, server));
   server.keys = [SHOPIFY_API_SECRET];
   // Auth
   server.use(
@@ -83,7 +83,7 @@ app.prepare().then(async () => {
         ctx.cookies.set("shopOrigin", shop, {
           httpOnly: false,
           secure: true,
-          sameSite: "none",
+          sameSite: false,
         });
         await removeScriptTags(ctx);
 
