@@ -7,7 +7,7 @@ let mailer = nodemailer.createTransport({
   secure: false,
   auth: {
     user: "jack@jacktolley.com",
-    pass: "D#1qcq6n#fyo",
+    pass: "LetsNotPutThePasswordOnAPublicGit",
   },
 });
 
